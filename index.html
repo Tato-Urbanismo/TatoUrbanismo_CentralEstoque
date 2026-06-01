@@ -148,6 +148,7 @@ tr:last-child td{border-bottom:none}
   <button class="mnav" onclick="mainTab('codigos',this,'c4')">🏷 Códigos</button>
   <button class="mnav" onclick="mainTab('alertas',this,'ca')">⚠ Alertas</button>
   <button class="mnav" onclick="mainTab('relatorios',this,'c2')">📄 Relatórios</button>
+  <button class="mnav" onclick="mainTab('patrimonio',this,'c3')">🏛 Patrimônio</button>
 </nav>
 <main>
 
@@ -307,6 +308,230 @@ tr:last-child td{border-bottom:none}
   </div>
 </div>
 
+<!-- PATRIMÔNIO -->
+<div class="panel" id="panel-patrimonio">
+  <div class="slabel">Controle de Patrimônio</div>
+  <div class="kpi-grid" id="kpi-patrimonio"></div>
+  <nav class="sub-nav">
+    <button class="snav c1 on" onclick="subTabPat('escritorio_engenharia',this,'c1')">📎 Escritório Engenharia</button>
+    <button class="snav c2" onclick="subTabPat('sala_de_reuniao',this,'c2')">🤝 Sala de Reunião</button>
+    <button class="snav c3" onclick="subTabPat('copa',this,'c3')">☕ Copa</button>
+    <button class="snav c4" onclick="subTabPat('sala_de_arquivos',this,'c4')">🗂 Sala de Arquivos</button>
+    <button class="snav c5" onclick="subTabPat('almoxarifado_eletrico',this,'c5')">⚡ Almoxarifado Elétrico</button>
+    <button class="snav c6" onclick="subTabPat('vestiário',this,'c6')">👕 Vestiário</button>
+    <button class="snav c1" onclick="subTabPat('refeitorio',this,'c1')">🍽 Refeitório</button>
+    <button class="snav c2" onclick="subTabPat('almoxarifado',this,'c2')">📦 Almoxarifado</button>
+    <button class="snav c3" onclick="subTabPat('canteiro_de_obras',this,'c3')">🏗 Canteiro de Obras</button>
+  </nav>
+  <div class="sub-panel  on" id="sub-pat-escritorio_engenharia">
+    <div class="slabel">📎 Escritório Engenharia</div>
+    <div class="kpi-grid" id="kpi-pat-escritorio_engenharia"></div>
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">Patrimônio — Escritório Engenharia</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input class="srch" placeholder="Buscar..." oninput="renderPatSecao('escritorio_engenharia')" id="s-pat-escritorio_engenharia">
+          <button class="btn btn-add" onclick="abrirModalPat('Escritório Engenharia')">+ Novo</button>
+        </div>
+        <span class="card-badge" id="c-pat-escritorio_engenharia">0</span>
+      </div>
+      <div class="scroll-t"><table><thead><tr>
+        <th class="col-cod">Nº Pat</th>
+        <th>Descrição</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Estado</th>
+        <th>Localização</th>
+        <th style="width:130px">Ações</th>
+      </tr></thead><tbody id="td-pat-escritorio_engenharia"></tbody></table></div>
+    </div>
+  </div>
+  <div class="sub-panel" id="sub-pat-sala_de_reuniao">
+    <div class="slabel">🤝 Sala de Reunião</div>
+    <div class="kpi-grid" id="kpi-pat-sala_de_reuniao"></div>
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">Patrimônio — Sala de Reunião</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input class="srch" placeholder="Buscar..." oninput="renderPatSecao('sala_de_reuniao')" id="s-pat-sala_de_reuniao">
+          <button class="btn btn-add" onclick="abrirModalPat('Sala de Reunião')">+ Novo</button>
+        </div>
+        <span class="card-badge" id="c-pat-sala_de_reuniao">0</span>
+      </div>
+      <div class="scroll-t"><table><thead><tr>
+        <th class="col-cod">Nº Pat</th>
+        <th>Descrição</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Estado</th>
+        <th>Localização</th>
+        <th style="width:130px">Ações</th>
+      </tr></thead><tbody id="td-pat-sala_de_reuniao"></tbody></table></div>
+    </div>
+  </div>
+  <div class="sub-panel" id="sub-pat-copa">
+    <div class="slabel">☕ Copa</div>
+    <div class="kpi-grid" id="kpi-pat-copa"></div>
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">Patrimônio — Copa</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input class="srch" placeholder="Buscar..." oninput="renderPatSecao('copa')" id="s-pat-copa">
+          <button class="btn btn-add" onclick="abrirModalPat('Copa')">+ Novo</button>
+        </div>
+        <span class="card-badge" id="c-pat-copa">0</span>
+      </div>
+      <div class="scroll-t"><table><thead><tr>
+        <th class="col-cod">Nº Pat</th>
+        <th>Descrição</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Estado</th>
+        <th>Localização</th>
+        <th style="width:130px">Ações</th>
+      </tr></thead><tbody id="td-pat-copa"></tbody></table></div>
+    </div>
+  </div>
+  <div class="sub-panel" id="sub-pat-sala_de_arquivos">
+    <div class="slabel">🗂 Sala de Arquivos</div>
+    <div class="kpi-grid" id="kpi-pat-sala_de_arquivos"></div>
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">Patrimônio — Sala de Arquivos</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input class="srch" placeholder="Buscar..." oninput="renderPatSecao('sala_de_arquivos')" id="s-pat-sala_de_arquivos">
+          <button class="btn btn-add" onclick="abrirModalPat('Sala de Arquivos')">+ Novo</button>
+        </div>
+        <span class="card-badge" id="c-pat-sala_de_arquivos">0</span>
+      </div>
+      <div class="scroll-t"><table><thead><tr>
+        <th class="col-cod">Nº Pat</th>
+        <th>Descrição</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Estado</th>
+        <th>Localização</th>
+        <th style="width:130px">Ações</th>
+      </tr></thead><tbody id="td-pat-sala_de_arquivos"></tbody></table></div>
+    </div>
+  </div>
+  <div class="sub-panel" id="sub-pat-almoxarifado_eletrico">
+    <div class="slabel">⚡ Almoxarifado Elétrico</div>
+    <div class="kpi-grid" id="kpi-pat-almoxarifado_eletrico"></div>
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">Patrimônio — Almoxarifado Elétrico</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input class="srch" placeholder="Buscar..." oninput="renderPatSecao('almoxarifado_eletrico')" id="s-pat-almoxarifado_eletrico">
+          <button class="btn btn-add" onclick="abrirModalPat('Almoxarifado Elétrico')">+ Novo</button>
+        </div>
+        <span class="card-badge" id="c-pat-almoxarifado_eletrico">0</span>
+      </div>
+      <div class="scroll-t"><table><thead><tr>
+        <th class="col-cod">Nº Pat</th>
+        <th>Descrição</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Estado</th>
+        <th>Localização</th>
+        <th style="width:130px">Ações</th>
+      </tr></thead><tbody id="td-pat-almoxarifado_eletrico"></tbody></table></div>
+    </div>
+  </div>
+  <div class="sub-panel" id="sub-pat-vestiário">
+    <div class="slabel">👕 Vestiário</div>
+    <div class="kpi-grid" id="kpi-pat-vestiário"></div>
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">Patrimônio — Vestiário</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input class="srch" placeholder="Buscar..." oninput="renderPatSecao('vestiário')" id="s-pat-vestiário">
+          <button class="btn btn-add" onclick="abrirModalPat('Vestiário')">+ Novo</button>
+        </div>
+        <span class="card-badge" id="c-pat-vestiário">0</span>
+      </div>
+      <div class="scroll-t"><table><thead><tr>
+        <th class="col-cod">Nº Pat</th>
+        <th>Descrição</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Estado</th>
+        <th>Localização</th>
+        <th style="width:130px">Ações</th>
+      </tr></thead><tbody id="td-pat-vestiário"></tbody></table></div>
+    </div>
+  </div>
+  <div class="sub-panel" id="sub-pat-refeitorio">
+    <div class="slabel">🍽 Refeitório</div>
+    <div class="kpi-grid" id="kpi-pat-refeitorio"></div>
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">Patrimônio — Refeitório</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input class="srch" placeholder="Buscar..." oninput="renderPatSecao('refeitorio')" id="s-pat-refeitorio">
+          <button class="btn btn-add" onclick="abrirModalPat('Refeitório')">+ Novo</button>
+        </div>
+        <span class="card-badge" id="c-pat-refeitorio">0</span>
+      </div>
+      <div class="scroll-t"><table><thead><tr>
+        <th class="col-cod">Nº Pat</th>
+        <th>Descrição</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Estado</th>
+        <th>Localização</th>
+        <th style="width:130px">Ações</th>
+      </tr></thead><tbody id="td-pat-refeitorio"></tbody></table></div>
+    </div>
+  </div>
+  <div class="sub-panel" id="sub-pat-almoxarifado">
+    <div class="slabel">📦 Almoxarifado</div>
+    <div class="kpi-grid" id="kpi-pat-almoxarifado"></div>
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">Patrimônio — Almoxarifado</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input class="srch" placeholder="Buscar..." oninput="renderPatSecao('almoxarifado')" id="s-pat-almoxarifado">
+          <button class="btn btn-add" onclick="abrirModalPat('Almoxarifado')">+ Novo</button>
+        </div>
+        <span class="card-badge" id="c-pat-almoxarifado">0</span>
+      </div>
+      <div class="scroll-t"><table><thead><tr>
+        <th class="col-cod">Nº Pat</th>
+        <th>Descrição</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Estado</th>
+        <th>Localização</th>
+        <th style="width:130px">Ações</th>
+      </tr></thead><tbody id="td-pat-almoxarifado"></tbody></table></div>
+    </div>
+  </div>
+  <div class="sub-panel" id="sub-pat-canteiro_de_obras">
+    <div class="slabel">🏗 Canteiro de Obras</div>
+    <div class="kpi-grid" id="kpi-pat-canteiro_de_obras"></div>
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">Patrimônio — Canteiro de Obras</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input class="srch" placeholder="Buscar..." oninput="renderPatSecao('canteiro_de_obras')" id="s-pat-canteiro_de_obras">
+          <button class="btn btn-add" onclick="abrirModalPat('Canteiro de Obras')">+ Novo</button>
+        </div>
+        <span class="card-badge" id="c-pat-canteiro_de_obras">0</span>
+      </div>
+      <div class="scroll-t"><table><thead><tr>
+        <th class="col-cod">Nº Pat</th>
+        <th>Descrição</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Estado</th>
+        <th>Localização</th>
+        <th style="width:130px">Ações</th>
+      </tr></thead><tbody id="td-pat-canteiro_de_obras"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
 <!-- RELATÓRIOS -->
 <div class="panel" id="panel-relatorios">
   <div class="slabel">Geração de Relatórios</div>
@@ -453,6 +678,30 @@ tr:last-child td{border-bottom:none}
   </div>
 </div>
 
+<!-- MODAL PATRIMÔNIO -->
+<div class="modal-overlay" id="modal-pat" style="display:none" onclick="if(event.target===this)fecharModalDireto('modal-pat')">
+  <div class="modal-box">
+    <div class="modal-head"><h3 id="modal-pat-title">Patrimônio</h3><button class="modal-close" onclick="fecharModalDireto('modal-pat')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label>Nº Patrimônio</label><input type="text" id="fp-id" placeholder="Ex: PAT-001" style="font-family:JetBrains Mono,monospace"></div>
+        <div class="form-group"><label>Estado</label><select id="fp-estado"><option>Bom</option><option>Regular</option><option>Ruim</option></select></div>
+      </div>
+      <div class="form-row full"><div class="form-group"><label>Descrição *</label><input type="text" id="fp-desc" placeholder="Ex: Mesa de Escritório"></div></div>
+      <div class="form-row">
+        <div class="form-group"><label>Marca</label><input type="text" id="fp-marca" placeholder="Ex: Dell"></div>
+        <div class="form-group"><label>Modelo</label><input type="text" id="fp-modelo" placeholder="Ex: Inspiron 15"></div>
+      </div>
+      <div class="form-row full"><div class="form-group"><label>Localização</label><input type="text" id="fp-local" placeholder="Ex: Sala de Engenharia"></div></div>
+      <input type="hidden" id="fp-secao">
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-cancel" onclick="fecharModalDireto('modal-pat')">Cancelar</button>
+      <button class="btn btn-save" onclick="salvarPat()">Salvar</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modal-cad" style="display:none" onclick="if(event.target===this)fecharModalDireto('modal-cad')"><div class="modal-box"><div class="modal-head"><h3 id="modal-cad-title">Novo Item</h3><button class="modal-close" onclick="fecharModalDireto('modal-cad')">✕</button></div><div class="modal-body"><div class="form-row"><div class="form-group"><label>Nº Insumo</label><input type="text" id="f-codigo" placeholder="Ex: LMP-001" style="font-family:JetBrains Mono,monospace"></div><div class="form-group"><label>Categoria</label><select id="f-cat"></select></div></div><div class="form-row full"><div class="form-group"><label>Descrição *</label><input type="text" id="f-desc" placeholder="Ex: Desinfetante Triel 5L"></div></div><div class="form-row"><div class="form-group"><label>Unidade *</label><select id="f-un"><option>un</option><option>m</option><option>kg</option><option>sc</option><option>cx</option><option>PC</option><option>par</option><option>BR</option><option>PÇ</option><option>GALÃO 5 LTS</option><option>GALÃO 1 LTS</option><option>FARDO</option></select></div><div class="form-group"><label>Estoque Inicial</label><input type="number" id="f-est" min="0" value="0"></div></div><div class="form-row full"><div class="form-group"><label>Qtd Mínima (Alerta)</label><input type="number" id="f-min" min="0" value="0"></div></div><input type="hidden" id="f-aba"><input type="hidden" id="f-edit-id"></div><div class="modal-foot"><button class="btn btn-cancel" onclick="fecharModalDireto('modal-cad')">Cancelar</button><button class="btn btn-save" onclick="salvarItem()">Salvar</button></div></div></div>
 <div class="modal-overlay" id="modal-mov" style="display:none" onclick="if(event.target===this)fecharModalDireto('modal-mov')"><div class="modal-box"><div class="modal-head" id="modal-mov-head"><h3 id="modal-mov-title">Registrar Entrada</h3><button class="modal-close" onclick="fecharModalDireto('modal-mov')">✕</button></div><div class="modal-body"><div class="form-row full"><div class="form-group"><label>Item *</label><select id="fm-item"></select></div></div><div class="form-row"><div class="form-group"><label>Quantidade *</label><input type="number" id="fm-qty" min="1" value="1"></div><div class="form-group"><label>Data</label><input type="date" id="fm-data"></div></div><div class="form-row full"><div class="form-group"><label>Obs / Destino</label><input type="text" id="fm-obs" placeholder="Ex: Frente B5, NF 12345..."></div></div><input type="hidden" id="fm-tipo"></div><div class="modal-foot"><button class="btn btn-cancel" onclick="fecharModalDireto('modal-mov')">Cancelar</button><button class="btn btn-save" id="btn-salvar-mov" onclick="salvarMov()">Registrar</button></div></div></div>
 <div class="modal-overlay" id="modal-del" style="display:none" onclick="if(event.target===this)fecharModalDireto('modal-del')"><div class="modal-box" style="max-width:360px"><div class="modal-head" style="background:var(--red)"><h3>Confirmar Exclusão</h3><button class="modal-close" onclick="fecharModalDireto('modal-del')">✕</button></div><div class="modal-body"><p style="font-size:13px;color:var(--muted);margin-bottom:8px">Excluir <strong id="del-nome"></strong>?</p><p style="font-size:11px;color:var(--red);font-family:JetBrains Mono,monospace">Esta ação não pode ser desfeita.</p><input type="hidden" id="del-id"></div><div class="modal-foot"><button class="btn btn-cancel" onclick="fecharModalDireto('modal-del')">Cancelar</button><button class="btn btn-saida" onclick="confirmarExclusao()">Excluir</button></div></div></div>
@@ -561,6 +810,16 @@ db.collection('estoque').doc('dados').set({itens:D.itens,movs:D.movs,ts:new Date
 .catch(function(){var el2=document.getElementById('save-ind');if(el2){el2.textContent='● salvo local';el2.style.color='var(--gold)';}});
 }catch(e){var el2=document.getElementById('save-ind');if(el2){el2.textContent='● salvo local';el2.style.color='var(--gold)';}}
 }
+
+function enriquecerItens(){
+  var codMap={};
+  DADOS_INICIAIS.itens.forEach(function(o){if(o.codigo)codMap[o.id]=o.codigo;});
+  var mudou=false;
+  D.itens.forEach(function(i){
+    if(!i.codigo&&codMap[i.id]){i.codigo=codMap[i.id];mudou=true;}
+  });
+  if(mudou){salvar();}
+}
 function carregar(){
 var el=document.getElementById('save-ind');
 if(el){el.textContent='☁ carregando...';el.style.color='var(--muted)';}
@@ -578,13 +837,21 @@ db.collection('estoque').doc('dados').get()
       var c={id:o.id,desc:o.desc,cat:o.cat,un:o.un,estoqueInicial:o.estoqueInicial,minimo:o.minimo,codigo:o.codigo};
       if(o.rede)c.rede=o.rede;
       if(minimoMap[c.id]!==undefined)c.minimo=minimoMap[c.id];
+      // Preservar estoque atual do Firebase (movimentos)
+      var fb=( d.itens||[]).find(function(x){return x.id===o.id;});
+      if(fb&&fb.estoqueInicial!==undefined)c.estoqueInicial=fb.estoqueInicial;
       return c;
     });
     var idsIni={};DADOS_INICIAIS.itens.forEach(function(it){idsIni[it.id]=true;});
     (d.itens||[]).forEach(function(it){if(!idsIni[it.id])D.itens.push(it);});
     D.movs=d.movs||[];
     localStorage.setItem(STORAGE_KEY,JSON.stringify({itens:D.itens,movs:D.movs}));
-    renderAll();
+    enriquecerItens();
+    // Carregar patrimônio do Firebase
+    try{db.collection('patrimonio').doc('dados').get().then(function(doc){
+      if(doc.exists&&doc.data().itens){PATRIMONIO=doc.data().itens;}
+      renderAll();
+    }).catch(function(){renderAll();});}catch(e){renderAll();}
     var el2=document.getElementById('save-ind');if(el2){el2.textContent='☁ online';el2.style.color='var(--green)';}
   }else{carregarLocal();}
 })
@@ -616,7 +883,7 @@ D.movs=[];salvar();
 D.itens=DADOS_INICIAIS.itens.map(function(o){var c={id:o.id,desc:o.desc,cat:o.cat,un:o.un,estoqueInicial:o.estoqueInicial,minimo:o.minimo,codigo:o.codigo};if(o.rede)c.rede=o.rede;return c;});
 D.movs=[];
 }
-renderAll();
+enriquecerItens();renderAll();
 var el=document.getElementById('save-ind');if(el){el.textContent='● offline';el.style.color='var(--gold)';}
 }
 function estoqueAtual(id){
@@ -787,6 +1054,7 @@ return '<tr style="border-left:3px solid var(--gold)"><td class="col-cod">'+(i.c
 function renderAll(){
 renderResumo();
 renderCodigos();
+renderPatrimonio();
 var redeAtiva=document.querySelector('#panel-redes .sub-panel.on');
 if(redeAtiva){var redeId=redeAtiva.id.replace('sub-','');renderRede(redeId);}
 var subAtiva=document.querySelector('#panel-canteiro .sub-panel.on');
@@ -1030,7 +1298,7 @@ h2+='</tr>';
 }
 tbody.innerHTML=h2;
 }
-function editarItemRede(id){editarItem(id);}
+function editarItemRede(id){if(typeof id === 'undefined' || id === null) return;pedirSenha('admin', function(){ _editarItemOriginal(id); });}
 function abrirModalRede(rede){
 var cats={agua:['Tubo PVC','Conexão PVC','Ferro Dúctil'],esgoto:['Tubo PVC','Conexão'],premoldado:['Pré-Moldado'],drenagem:['Tubo Concreto','Pré-Moldado']};
 document.getElementById('f-desc').value='';
@@ -1115,11 +1383,130 @@ salvar();
 renderAlertas();
 renderResumo();
 }
+// === PATRIMÔNIO ===
+var PATRIMONIO = [{"id":"PAT-001","desc":"MESA DE ESCRITÓRIO 1","marca":"-","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-002","desc":"MESA DE ESCRITÓRIO 2","marca":"-","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-003","desc":"MESA DE ESCRITÓRIO 3","marca":"-","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-004","desc":"IMPRESSORA","marca":"BROTHER","modelo":"MFC-8712DW","secao":"Escritório Engenharia"},{"id":"PAT-005","desc":"MONITOR 1","marca":"C3TECH","modelo":"MR-19","secao":"Escritório Engenharia"},{"id":"PAT-006","desc":"MONITOR 2","marca":"PRIMITEC","modelo":"PRIMITEC 22HYFDX","secao":"Escritório Engenharia"},{"id":"PAT-007","desc":"MONITOR 3","marca":"PRIMITEC","modelo":"PRIMITEC 22HYFDX","secao":"Escritório Engenharia"},{"id":"PAT-008","desc":"CRIADO MUDO (MARROM)","marca":"-","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-009","desc":"CRIADO MUDO (BRANCO)","marca":"-","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-016","desc":"AR CONDICIONADO","marca":"LG","modelo":"DUAL INVERTER (14.000)","secao":"Escritório Engenharia"},{"id":"PAT-017","desc":"CADEIRA DE ESCRITÓRIO 1","marca":"-","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-018","desc":"CADEIRA DE ESCRITÓRIO 2","marca":"-","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-019","desc":"CADEIRA DE ESCRITÓRIO 3","marca":"-","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-020","desc":"CADEIRA DE ESCRITÓRIO 4","marca":"-","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-067","desc":"CADEIRA DE ESCRITÓRIO 5","marca":"MARTIFLEX","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-068","desc":"CADEIRA DE ESCRITÓRIO 6","marca":"MARTIFLEX","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-069","desc":"CADEIRA DE ESCRITÓRIO 7","marca":"MARTIFLEX","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-070","desc":"CADEIRA DE ESCRITÓRIO 8","marca":"-","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-071","desc":"CADEIRA DE ESCRITÓRIO 9","marca":"-","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-072","desc":"CADEIRA DE ESCRITÓRIO 10","marca":"-","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-073","desc":"CADEIRA DE ESCRITÓRIO 11","marca":"-","modelo":"-","secao":"Escritório Engenharia"},{"id":"PAT-021","desc":"NOTEBOOK 1","marca":"ACER","modelo":"Intel Core i5-1135G7","secao":"Escritório Engenharia"},{"id":"PAT-022","desc":"NOTEBOOK 2","marca":"DELL","modelo":"Intel Core i3-7020U","secao":"Escritório Engenharia"},{"id":"PAT-023","desc":"TV 32 POLEGADAS","marca":"PANASONIC","modelo":"-","secao":"Sala de Reunião"},{"id":"PAT-024","desc":"MESA DE REUNIÃO","marca":"-","modelo":"-","secao":"Sala de Reunião"},{"id":"PAT-025","desc":"SUPORTE MÓVEL PARA TV","marca":"-","modelo":"-","secao":"Sala de Reunião"},{"id":"PAT-026","desc":"MICROONDAS","marca":"MONDIAL","modelo":"MO-02-34/220W","secao":"Copa"},{"id":"PAT-064","desc":"FRIGOBAR","marca":"IDEA","modelo":"MDRD108FGA012","secao":"Copa"},{"id":"PAT-028","desc":"ARMÁRIO PARA MICROONDAS","marca":"-","modelo":"-","secao":"Copa"},{"id":"PAT-029","desc":"RACK DE COZINHA","marca":"-","modelo":"-","secao":"Copa"},{"id":"PAT-030","desc":"ARMÁRIO DE DOCUMENTOS DE MADEIRA","marca":"-","modelo":"-","secao":"Sala de Arquivos"},{"id":"PAT-031","desc":"ARMÁRIO DE ARQUIVOS","marca":"-","modelo":"-","secao":"Sala de Arquivos"},{"id":"PAT-032","desc":"ARMÁRIO DE EPIs","marca":"-","modelo":"-","secao":"Sala de Arquivos"},{"id":"PAT-033","desc":"ARMÁRIO DE VESTIÁRIO 1","marca":"-","modelo":"-","secao":"Sala de Arquivos"},{"id":"PAT-013","desc":"ROÇADEIRA COSTAL","marca":"STIHL","modelo":"FS 220","secao":"Almoxarifado Elétrico"},{"id":"PAT-011","desc":"FURADEIRA DE IMPACTO","marca":"BOSCH","modelo":"750W GSB13RE","secao":"Almoxarifado Elétrico"},{"id":"PAT-012","desc":"SERRA CIRCULAR","marca":"DEWALT","modelo":"DW862-B2","secao":"Almoxarifado Elétrico"},{"id":"PAT-010","desc":"COMPRESSOR GRANDE","marca":"MOTOMIL","modelo":"-","secao":"Almoxarifado Elétrico"},{"id":"PAT-015","desc":"CARREGADOR DE BATERIA","marca":"VONDER","modelo":"-","secao":"Almoxarifado Elétrico"},{"id":"PAT-034","desc":"ARMÁRIO DE VESTIÁRIO 2","marca":"-","modelo":"-","secao":"Vestiário"},{"id":"PAT-035","desc":"ARMÁRIO DE VESTIÁRIO 3","marca":"-","modelo":"-","secao":"Vestiário"},{"id":"PAT-036","desc":"GELADEIRA","marca":"DAKO","modelo":"DUO 365","secao":"Vestiário"},{"id":"PAT-037","desc":"LIXEIRA 120 LITROS 1","marca":"-","modelo":"-","secao":"Vestiário"},{"id":"PAT-038","desc":"BEBEDOURO INOX","marca":"-","modelo":"-","secao":"Vestiário"},{"id":"PAT-039","desc":"BEBEDOURO (BRANCO)","marca":"-","modelo":"-","secao":"Refeitório"},{"id":"PAT-040","desc":"LIXEIRA 120 LITROS 2","marca":"-","modelo":"-","secao":"Refeitório"},{"id":"PAT-065","desc":"ARMÁRIO 2 PORTAS (1,00X0,90)","marca":"-","modelo":"-","secao":"Refeitório"},{"id":"PAT-041","desc":"MESA DE REFEITÓRIO 4","marca":"-","modelo":"-","secao":"Refeitório"},{"id":"PAT-042","desc":"MESA DE REFEITÓRIO 1","marca":"-","modelo":"-","secao":"Refeitório"},{"id":"PAT-043","desc":"MESA DE REFEITÓRIO 2","marca":"-","modelo":"-","secao":"Refeitório"},{"id":"PAT-044","desc":"MESA DE REFEITÓRIO 3","marca":"-","modelo":"-","secao":"Refeitório"},{"id":"PAT-047","desc":"BANCO DE MESA DE REFEITÓRIO 2","marca":"-","modelo":"-","secao":"Refeitório"},{"id":"PAT-048","desc":"BANCO DE MESA DE REFEITÓRIO 3","marca":"-","modelo":"-","secao":"Refeitório"},{"id":"PAT-049","desc":"BANCO DE MESA DE REFEITÓRIO 4","marca":"-","modelo":"-","secao":"Refeitório"},{"id":"PAT-050","desc":"BANCO DE MESA DE REFEITÓRIO 5","marca":"-","modelo":"-","secao":"Refeitório"},{"id":"PAT-051","desc":"BANCO DE MESA DE REFEITÓRIO 6","marca":"-","modelo":"-","secao":"Refeitório"},{"id":"PAT-052","desc":"BANCO DE MESA DE REFEITÓRIO 7","marca":"-","modelo":"-","secao":"Refeitório"},{"id":"PAT-053","desc":"BANCO DE MESA DE REFEITÓRIO 8","marca":"-","modelo":"-","secao":"Refeitório"},{"id":"PAT-066","desc":"BANCO DE MESA DE REFEITÓRIO 1","marca":"-","modelo":"-","secao":"Refeitório"},{"id":"PAT-054","desc":"ESTANTE DE MATERIAIS","marca":"-","modelo":"-","secao":"Almoxarifado"},{"id":"PAT-055","desc":"ARMÁRIO DE ALMOXARIFADO","marca":"-","modelo":"-","secao":"Almoxarifado"},{"id":"PAT-056","desc":"ARMÁRIO DE 4 GAVETAS","marca":"-","modelo":"-","secao":"Almoxarifado"},{"id":"PAT-057","desc":"ARMÁRIO DE 2 PORTAS (0,90X0,70)","marca":"-","modelo":"-","secao":"Almoxarifado"},{"id":"PAT-058","desc":"TENDA 1 (5X5)","marca":"-","modelo":"-","secao":"Canteiro de Obras"},{"id":"PAT-059","desc":"TENDA 2 (4X4)","marca":"-","modelo":"-","secao":"Canteiro de Obras"},{"id":"PAT-060","desc":"TENDA 3 (5X6)","marca":"-","modelo":"-","secao":"Canteiro de Obras"},{"id":"PAT-061","desc":"TENDA 4 (6X6)","marca":"-","modelo":"-","secao":"Canteiro de Obras"},{"id":"PAT-062","desc":"CONTAINER ALMOXARIFADO (6X2,44)","marca":"-","modelo":"-","secao":"Canteiro de Obras"}];
+
+function subTabPat(id,btn,cls){
+  document.querySelectorAll('#panel-patrimonio .sub-panel').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('#panel-patrimonio .sub-nav .snav').forEach(function(b){b.classList.remove('on');});
+  document.getElementById('sub-pat-'+id).classList.add('on');
+  btn.classList.add('on');
+  renderPatSecao(id);
+}
+
+function secaoId(sec){
+  return sec.toLowerCase().replace(/ /g,'_').replace(/ã/g,'a').replace(/ç/g,'c').replace(/é/g,'e').replace(/ó/g,'o');
+}
+
+function renderPatrimonio(){
+  var total=PATRIMONIO.length;
+  var bom=PATRIMONIO.filter(function(p){return (p.estado||'Bom')==='Bom';}).length;
+  var regular=PATRIMONIO.filter(function(p){return p.estado==='Regular';}).length;
+  var ruim=PATRIMONIO.filter(function(p){return p.estado==='Ruim';}).length;
+  setKpi('kpi-patrimonio',[
+    {c:'kc-blue',l:'Total de Itens',v:total,s:'patrimônios cadastrados'},
+    {c:'kc-green',l:'Estado Bom',v:bom,s:'em boas condições'},
+    {c:'kc-gold',l:'Estado Regular',v:regular,s:'necessita atenção'},
+    {c:'kc-red',l:'Estado Ruim',v:ruim,s:'necessita manutenção'}
+  ]);
+  // Renderizar subaba ativa
+  var ativa=document.querySelector('#panel-patrimonio .sub-panel.on');
+  if(ativa)renderPatSecao(ativa.id.replace('sub-pat-',''));
+}
+
+function renderPatSecao(secId){
+  var secMap={};
+  ['Escritório Engenharia','Sala de Reunião','Copa','Sala de Arquivos','Almoxarifado Elétrico','Vestiário','Refeitório','Almoxarifado','Canteiro de Obras'].forEach(function(s){
+    secMap[secaoId(s)]=s;
+  });
+  var secNome=secMap[secId]||secId;
+  var srch=(document.getElementById('s-pat-'+secId)||{value:''}).value.toLowerCase();
+  var rows=PATRIMONIO.filter(function(p){
+    if(p.secao!==secNome)return false;
+    if(srch&&p.desc.toLowerCase().indexOf(srch)<0&&(p.marca||'').toLowerCase().indexOf(srch)<0)return false;
+    return true;
+  });
+  var cnt=document.getElementById('c-pat-'+secId);if(cnt)cnt.textContent=rows.length+' itens';
+  var tbody=document.getElementById('td-pat-'+secId);if(!tbody)return;
+  if(!rows.length){tbody.innerHTML='<tr><td colspan="7" class="empty-state">Nenhum item.</td></tr>';return;}
+  var ESTADOS=['Bom','Regular','Ruim'];
+  var CORES={Bom:'var(--green)',Regular:'var(--gold)',Ruim:'var(--red)'};
+  tbody.innerHTML=rows.map(function(p){
+    var cor=CORES[p.estado||'Bom']||'var(--green)';
+    return '<tr>'
+      +'<td class="col-cod">'+p.id+'</td>'
+      +'<td><strong>'+p.desc+'</strong></td>'
+      +'<td style="font-size:11px;color:var(--muted)">'+(p.marca||'-')+'</td>'
+      +'<td style="font-size:11px;color:var(--muted)">'+(p.modelo||'-')+'</td>'
+      +'<td><span style="font-family:JetBrains Mono,monospace;font-size:10px;font-weight:700;color:'+cor+'">'+(p.estado||'Bom')+'</span></td>'
+      +'<td style="font-size:11px">'+(p.local||'—')+'</td>'
+      +'<td style="white-space:nowrap"><button class="fbtn" onclick="editarPat(this.dataset.pid)" data-pid="'+p.id+'">Editar</button></td>'
+      +'</tr>';
+  }).join('');
+}
+
+function abrirModalPat(secao){
+  pedirSenha('admin',function(){
+    document.getElementById('fp-id').value='';
+    document.getElementById('fp-desc').value='';
+    document.getElementById('fp-marca').value='';
+    document.getElementById('fp-modelo').value='';
+    document.getElementById('fp-estado').value='Bom';
+    document.getElementById('fp-local').value='';
+    document.getElementById('fp-secao').value=secao;
+    document.getElementById('modal-pat-title').textContent='Novo Patrimônio — '+secao;
+    document.getElementById('modal-pat').style.display='flex';
+  });
+}
+
+function editarPat(id){
+  pedirSenha('admin',function(){
+    var p=PATRIMONIO.find(function(x){return x.id===id;});
+    if(!p)return;
+    document.getElementById('fp-id').value=p.id;
+    document.getElementById('fp-desc').value=p.desc;
+    document.getElementById('fp-marca').value=p.marca||'';
+    document.getElementById('fp-modelo').value=p.modelo||'';
+    document.getElementById('fp-estado').value=p.estado||'Bom';
+    document.getElementById('fp-local').value=p.local||'';
+    document.getElementById('fp-secao').value=p.secao;
+    document.getElementById('modal-pat-title').textContent='Editar — '+p.desc;
+    document.getElementById('modal-pat').style.display='flex';
+  });
+}
+
+function salvarPat(){
+  var id=document.getElementById('fp-id').value.trim();
+  var desc=document.getElementById('fp-desc').value.trim();
+  if(!desc){alert('Descrição obrigatória!');return;}
+  var obj={
+    id:id||'PAT-'+String(PATRIMONIO.length+1).padStart(3,'0'),
+    desc:desc,
+    marca:document.getElementById('fp-marca').value.trim()||'-',
+    modelo:document.getElementById('fp-modelo').value.trim()||'-',
+    estado:document.getElementById('fp-estado').value,
+    local:document.getElementById('fp-local').value.trim(),
+    secao:document.getElementById('fp-secao').value
+  };
+  if(id){
+    var idx=PATRIMONIO.findIndex(function(p){return p.id===id;});
+    if(idx>=0)PATRIMONIO[idx]=obj;
+  }else{
+    PATRIMONIO.push(obj);
+  }
+  fecharModalDireto('modal-pat');
+  renderPatrimonio();
+  // Salvar no Firebase
+  try{db.collection('patrimonio').doc('dados').set({itens:PATRIMONIO,ts:new Date().toISOString()});}catch(e){}
+}
+
 // === SISTEMA DE SENHAS ===
 var SENHA_ADMIN = 'Tato29284';
 var SENHA_OPER  = 'tatourbanismo';
 var _senhaCb = null;
 var _senhaTipo = null;
+var _senhaDesbloqueado = false;
+var _senhaTimer = null;
 
 function pedirSenha(tipo, callback){
   _senhaCb = callback;
@@ -1142,7 +1529,9 @@ function confirmarSenha(){
            (_senhaTipo==='operador' && val===SENHA_OPER);
   if(ok){
     fecharSenha();
-    if(_senhaCb) _senhaCb();
+    var cb = _senhaCb;
+    _senhaCb = null;
+    if(cb) cb();
   } else {
     var err = document.getElementById('senha-erro');
     err.style.display = 'block';
@@ -1174,6 +1563,7 @@ abrirModalRedeSubcat = function(rede, subcat){
 
 var _editarItemOriginal = editarItem;
 editarItem = function(id){
+  if(typeof id === 'undefined' || id === null) return;
   pedirSenha('admin', function(){ _editarItemOriginal(id); });
 };
 
