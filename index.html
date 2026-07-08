@@ -49,7 +49,7 @@ main{padding:20px 28px;max-width:1440px;margin:0 auto}
 .card-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
 .card-badge{font-family:JetBrains Mono,monospace;font-size:9px;color:var(--muted);background:var(--paper);padding:2px 6px;border-radius:2px}
 table{width:100%;border-collapse:collapse;min-width:600px}
-th{font-family:JetBrains Mono,monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);padding:7px 12px;text-align:left;border-bottom:1px solid var(--border);background:var(--paper);font-weight:500}
+th{font-family:JetBrains Mono,monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);padding:7px 12px;text-align:left;border-bottom:1px solid var(--border);background:var(--paper);font-weight:500;position:sticky;top:0;z-index:2}
 td{padding:7px 12px;border-bottom:1px solid var(--border);font-size:12px;vertical-align:middle}
 .col-desc{min-width:200px}
 tr:last-child td{border-bottom:none}
@@ -207,7 +207,7 @@ tr:last-child td{border-bottom:none}
 <div class="panel" id="panel-alertas"><div class="slabel">Central de Alertas</div><div class="kpi-grid" id="kpi-alertas"></div><div class="card"><div class="card-head"><span class="card-title">🔴 Estoque Zerado</span><span class="card-badge" id="badge-al-zero">0</span></div><div class="scroll-t"><table><thead><tr><th class="col-cod">Nº</th><th>Item</th><th>Categoria</th><th>Un</th><th class="num">Mínimo</th></tr></thead><tbody id="td-al-zero"></tbody></table></div></div><div class="card"><div class="card-head"><span class="card-title">🟡 Estoque Baixo</span><span class="card-badge" id="badge-al-baixo">0</span></div><div class="scroll-t"><table><thead><tr><th class="col-cod">Nº</th><th>Item</th><th>Categoria</th><th>Un</th><th class="num">Atual</th><th class="num">Mínimo</th><th class="num">Faltam</th></tr></thead><tbody id="td-al-baixo"></tbody></table></div></div></div>
 </main>
 <div class="modal-overlay" id="modal-pat" style="display:none" onclick="if(event.target===this)fecharModalDireto('modal-pat')"><div class="modal-box"><div class="modal-head"><h3 id="modal-pat-title">Patrimônio</h3><button class="modal-close" onclick="fecharModalDireto('modal-pat')">✕</button></div><div class="modal-body"><div class="form-row"><div class="form-group"><label>Nº Patrimônio</label><input type="text" id="fp-id" placeholder="Ex: PAT-001" style="font-family:JetBrains Mono,monospace"></div><div class="form-group"><label>Estado</label><select id="fp-estado"><option>Bom</option><option>Regular</option><option>Ruim</option></select></div></div><div class="form-row full"><div class="form-group"><label>Descrição *</label><input type="text" id="fp-desc"></div></div><div class="form-row"><div class="form-group"><label>Marca</label><input type="text" id="fp-marca"></div><div class="form-group"><label>Modelo</label><input type="text" id="fp-modelo"></div></div><div class="form-row full"><div class="form-group"><label>Localização</label><input type="text" id="fp-local"></div></div><input type="hidden" id="fp-secao"></div><div class="modal-foot"><button class="btn btn-cancel" onclick="fecharModalDireto('modal-pat')">Cancelar</button><button class="btn btn-save" onclick="salvarPat()">Salvar</button></div></div></div>
-<div class="modal-overlay" id="modal-cad" style="display:none" onclick="if(event.target===this)fecharModalDireto('modal-cad')"><div class="modal-box"><div class="modal-head"><h3 id="modal-cad-title">Novo Item</h3><button class="modal-close" onclick="fecharModalDireto('modal-cad')">✕</button></div><div class="modal-body"><div class="form-row"><div class="form-group"><label>Nº Insumo</label><input type="text" id="f-codigo" placeholder="Ex: LMP-001" style="font-family:JetBrains Mono,monospace"></div><div class="form-group"><label>Categoria</label><select id="f-cat"></select></div></div><div class="form-row full"><div class="form-group"><label>Descrição *</label><input type="text" id="f-desc" placeholder="Ex: Desinfetante Triel 5L"></div></div><div class="form-row"><div class="form-group"><label>Unidade *</label><select id="f-un"><option>un</option><option>m</option><option>kg</option><option>sc</option><option>cx</option><option>PC</option><option>par</option><option>BR</option><option>PÇ</option><option>GALÃO 5 LTS</option><option>GALÃO 1 LTS</option><option>FARDO</option></select></div><div class="form-group" id="f-est-group"><label id="f-est-label">Estoque Inicial</label><input type="number" id="f-est" min="0" value="0"></div></div><div class="form-row full"><div class="form-group"><label>Qtd Mínima</label><input type="number" id="f-min" min="0" value="0"></div></div><input type="hidden" id="f-aba"><input type="hidden" id="f-edit-id"></div><div class="modal-foot"><button class="btn btn-cancel" onclick="fecharModalDireto('modal-cad')">Cancelar</button><button class="btn btn-save" onclick="salvarItem()">Salvar</button></div></div></div>
+<div class="modal-overlay" id="modal-cad" style="display:none" onclick="if(event.target===this)fecharModalDireto('modal-cad')"><div class="modal-box"><div class="modal-head"><h3 id="modal-cad-title">Novo Item</h3><button class="modal-close" onclick="fecharModalDireto('modal-cad')">✕</button></div><div class="modal-body"><div class="form-row"><div class="form-group"><label>Nº Insumo</label><input type="text" id="f-codigo" placeholder="Ex: LMP-001" style="font-family:JetBrains Mono,monospace"></div><div class="form-group"><label>Categoria</label><select id="f-cat" onchange="_atualizarCodigoPorCategoria()"></select></div></div><div class="form-row full"><div class="form-group"><label>Descrição *</label><input type="text" id="f-desc" placeholder="Ex: Desinfetante Triel 5L"></div></div><div class="form-row"><div class="form-group"><label>Unidade *</label><select id="f-un"><option>un</option><option>m</option><option>kg</option><option>sc</option><option>cx</option><option>PC</option><option>par</option><option>BR</option><option>PÇ</option><option>GALÃO 5 LTS</option><option>GALÃO 1 LTS</option><option>FARDO</option></select></div><div class="form-group" id="f-est-group"><label id="f-est-label">Estoque Inicial</label><input type="number" id="f-est" min="0" value="0"></div></div><div class="form-row"><div class="form-group"><label>Qtd Chegada</label><input type="number" id="f-chegada" min="0" value="0"></div><div class="form-group"><label>Qtd Mínima</label><input type="number" id="f-min" min="0" value="0"></div></div><input type="hidden" id="f-aba"><input type="hidden" id="f-edit-id"><input type="hidden" id="f-chegada-orig"><input type="hidden" id="f-estatual-orig"></div><div class="modal-foot"><button class="btn btn-cancel" onclick="fecharModalDireto('modal-cad')">Cancelar</button><button class="btn btn-save" onclick="salvarItem()">Salvar</button></div></div></div>
 <div class="modal-overlay" id="modal-mov" style="display:none" onclick="if(event.target===this)fecharModalDireto('modal-mov')"><div class="modal-box"><div class="modal-head" id="modal-mov-head"><h3 id="modal-mov-title">Registrar Entrada</h3><button class="modal-close" onclick="fecharModalDireto('modal-mov')">✕</button></div><div class="modal-body"><div class="form-row full"><div class="form-group"><label>Item *</label>
 <input type="text" id="fm-busca" placeholder="Buscar item..." autocomplete="off"
   oninput="filtrarItensMov()"
@@ -252,15 +252,25 @@ var PATRIMONIO=[{"id":"PAT-001","desc":"MESA DE ESCRITÓRIO 1","marca":"-","mode
 function subTabPat(id,btn,cls){document.querySelectorAll('#panel-patrimonio .sub-panel').forEach(function(p){p.classList.remove('on');});document.querySelectorAll('#panel-patrimonio .sub-nav .snav').forEach(function(b){b.classList.remove('on');});document.getElementById('sub-pat-'+id).classList.add('on');btn.classList.add('on');renderPatSecao(id);}
 function renderPatrimonio(){var total=PATRIMONIO.length;var bom=PATRIMONIO.filter(function(p){return (p.estado||'Bom')==='Bom';}).length;var regular=PATRIMONIO.filter(function(p){return p.estado==='Regular';}).length;var ruim=PATRIMONIO.filter(function(p){return p.estado==='Ruim';}).length;setKpi('kpi-patrimonio',[{c:'kc-blue',l:'Total de Itens',v:total,s:'patrimônios'},{c:'kc-green',l:'Estado Bom',v:bom,s:'boas condições'},{c:'kc-gold',l:'Estado Regular',v:regular,s:'atenção'},{c:'kc-red',l:'Estado Ruim',v:ruim,s:'manutenção'}]);var ativa=document.querySelector('#panel-patrimonio .sub-panel.on');if(ativa)renderPatSecao(ativa.id.replace('sub-pat-',''));}
 function renderPatSecao(secId){var secMap={escritorio_engenharia:'Escritório Engenharia',sala_de_reuniao:'Sala de Reunião',copa:'Copa',sala_de_arquivos:'Sala de Arquivos',almoxarifado_eletrico:'Almoxarifado Elétrico',vestiario:'Vestiário',refeitorio:'Refeitório',almoxarifado:'Almoxarifado',canteiro_de_obras:'Canteiro de Obras'};var secNome=secMap[secId]||secId;var srch=(document.getElementById('s-pat-'+secId)||{value:''}).value.toLowerCase();var rows=PATRIMONIO.filter(function(p){if(p.secao!==secNome)return false;if(srch&&p.desc.toLowerCase().indexOf(srch)<0&&(p.marca||'').toLowerCase().indexOf(srch)<0)return false;return true;});var cnt=document.getElementById('c-pat-'+secId);if(cnt)cnt.textContent=rows.length+' itens';var tbody=document.getElementById('td-pat-'+secId);if(!tbody)return;if(!rows.length){tbody.innerHTML='<tr><td colspan="7" class="empty-state">Nenhum item.</td></tr>';return;}var CORES={Bom:'var(--green)',Regular:'var(--gold)',Ruim:'var(--red)'};tbody.innerHTML=rows.map(function(p){var cor=CORES[p.estado||'Bom']||'var(--green)';return '<tr><td class="col-cod">'+p.id+'</td><td><strong>'+p.desc+'</strong></td><td style="font-size:11px;color:var(--muted)">'+(p.marca||'-')+'</td><td style="font-size:11px;color:var(--muted)">'+(p.modelo||'-')+'</td><td><span style="font-family:JetBrains Mono,monospace;font-size:10px;font-weight:700;color:'+cor+'">'+(p.estado||'Bom')+'</span></td><td style="font-size:11px">'+(p.local||'—')+'</td><td style="white-space:nowrap"><button class="fbtn" data-pid="'+p.id+'" onclick="editarPat(this.dataset.pid)">Editar</button></td></tr>';}).join('');}
-function abrirModalPat(secao){document.getElementById('fp-id').value='';document.getElementById('fp-desc').value='';document.getElementById('fp-marca').value='';document.getElementById('fp-modelo').value='';document.getElementById('fp-estado').value='Bom';document.getElementById('fp-local').value='';document.getElementById('fp-secao').value=secao;document.getElementById('modal-pat-title').textContent='Novo Patrimônio — '+secao;document.getElementById('modal-pat').style.display='flex';}
+function proximoCodigoPat(){var nums=PATRIMONIO.map(function(p){return parseInt((p.id||'').split('-')[1])||0;});var prox=(nums.length>0?Math.max.apply(null,nums):0)+1;return 'PAT-'+String(prox).padStart(3,'0');}
+function abrirModalPat(secao){document.getElementById('fp-id').value=proximoCodigoPat();document.getElementById('fp-desc').value='';document.getElementById('fp-marca').value='';document.getElementById('fp-modelo').value='';document.getElementById('fp-estado').value='Bom';document.getElementById('fp-local').value='';document.getElementById('fp-secao').value=secao;document.getElementById('modal-pat-title').textContent='Novo Patrimônio — '+secao;document.getElementById('modal-pat').style.display='flex';}
 function editarPat(id){var p=PATRIMONIO.find(function(x){return x.id===id;});if(!p)return;document.getElementById('fp-id').value=p.id;document.getElementById('fp-desc').value=p.desc;document.getElementById('fp-marca').value=p.marca||'';document.getElementById('fp-modelo').value=p.modelo||'';document.getElementById('fp-estado').value=p.estado||'Bom';document.getElementById('fp-local').value=p.local||'';document.getElementById('fp-secao').value=p.secao;document.getElementById('modal-pat-title').textContent='Editar — '+p.desc;document.getElementById('modal-pat').style.display='flex';}
-function salvarPat(){var id=document.getElementById('fp-id').value.trim();var desc=document.getElementById('fp-desc').value.trim();if(!desc){alert('Descrição obrigatória!');return;}var obj={id:id||'PAT-'+String(PATRIMONIO.length+1).padStart(3,'0'),desc:desc,marca:document.getElementById('fp-marca').value.trim()||'-',modelo:document.getElementById('fp-modelo').value.trim()||'-',estado:document.getElementById('fp-estado').value,local:document.getElementById('fp-local').value.trim(),secao:document.getElementById('fp-secao').value};if(id){var idx=PATRIMONIO.findIndex(function(p){return p.id===id;});if(idx>=0)PATRIMONIO[idx]=obj;}else{PATRIMONIO.push(obj);}fecharModalDireto('modal-pat');renderPatrimonio();salvar();db.collection('patrimonio').doc('dados').set({itens:PATRIMONIO,ts:new Date().toISOString()}).catch(function(){});}
-function proximoCodigo(aba){
-var prefMap={limpeza:'LMP',escritorio:'ESC',uniformes:'UNI',filtros:'FIL',ferramentas:'FER',equipamentos:'ELE',argamassas:'ARG','rede_agua':'RAA','rede_esgoto':'RES','rede_premoldado':'RPM','rede_drenagem':'RDR'};
-var pref=prefMap[aba]||'INS';
+function salvarPat(){var id=document.getElementById('fp-id').value.trim();var isEdit=PATRIMONIO.some(function(p){return p.id===id;});var obj={id:id||proximoCodigoPat(),desc:document.getElementById('fp-desc').value.trim(),marca:document.getElementById('fp-marca').value.trim()||'-',modelo:document.getElementById('fp-modelo').value.trim()||'-',estado:document.getElementById('fp-estado').value,local:document.getElementById('fp-local').value.trim(),secao:document.getElementById('fp-secao').value};if(!obj.desc){alert('Descrição obrigatória!');return;}if(isEdit){var idx=PATRIMONIO.findIndex(function(p){return p.id===id;});if(idx>=0)PATRIMONIO[idx]=obj;}else{PATRIMONIO.push(obj);}fecharModalDireto('modal-pat');renderPatrimonio();salvar();db.collection('patrimonio').doc('dados').set({itens:PATRIMONIO,ts:new Date().toISOString()}).catch(function(){});}
+function proximoCodigo(cat){
+var prefMap={
+'Limpeza':'LMP','Escritório':'ESC','Uniforme':'UNI','EPI':'EPI','Filtro':'FIL','Ferramenta':'FER',
+'Elétrico':'ELE','Mecânico':'MEC','Medição':'MED','Argamassa':'ARG','Cimento':'CIM','Cal':'CAL',
+'Tubo PVC':'TPV','Conexão PVC':'CPV','Ferro Dúctil':'FDU','Conexão':'CON','Pré-Moldado':'PMO','Tubo Concreto':'TCO'
+};
+var pref=prefMap[cat]||'INS';
 var nums=D.itens.filter(function(i){return i.codigo&&i.codigo.indexOf(pref+'-')===0;}).map(function(i){return parseInt(i.codigo.split('-')[1])||0;});
 var prox=(nums.length>0?Math.max.apply(null,nums):0)+1;
 return pref+'-'+String(prox).padStart(3,'0');
+}
+function _atualizarCodigoPorCategoria(){
+if(document.getElementById('f-edit-id').value)return;
+var cat=document.getElementById('f-cat').value;
+document.getElementById('f-codigo').value=proximoCodigo(cat);
 }
 function renderCardsMinimo(){
 var grid=document.getElementById('grid-cards-min');if(!grid)return;
@@ -565,15 +575,18 @@ renderMov();renderAlertas();
 }
 function abrirModal(aba){
 document.getElementById('f-desc').value='';
-document.getElementById('f-codigo').value=proximoCodigo(aba);
+var cats=ABA_CATS_MODAL[aba]||['Outros'];
+document.getElementById('f-cat').innerHTML=cats.map(function(c){return '<option>'+c+'</option>';}).join('');
+document.getElementById('f-codigo').value=proximoCodigo(cats[0]);
 var _fEstN=document.getElementById('f-est');
 _fEstN.value='0';_fEstN.removeAttribute('readonly');_fEstN.style.background='';_fEstN.style.color='';
 var _lEstN=document.getElementById('f-est-label');if(_lEstN)_lEstN.textContent='Estoque Inicial';
+document.getElementById('f-chegada').value='0';
+document.getElementById('f-chegada-orig').value='0';
+document.getElementById('f-estatual-orig').value='0';
 document.getElementById('f-min').value='0';
 document.getElementById('f-edit-id').value='';
 document.getElementById('f-aba').value=aba;
-var cats=ABA_CATS_MODAL[aba]||['Outros'];
-document.getElementById('f-cat').innerHTML=cats.map(function(c){return '<option>'+c+'</option>';}).join('');
 document.getElementById('modal-cad-title').textContent='Novo Item — '+abaLabel(aba);
 document.getElementById('modal-cad').style.display='flex';
 }
@@ -594,12 +607,16 @@ sel.innerHTML=cats.map(function(c){return '<option'+(c===item.cat?' selected':''
 var unSel=document.getElementById('f-un');
 for(var u=0;u<unSel.options.length;u++){if(unSel.options[u].value===item.un||unSel.options[u].text===item.un){unSel.selectedIndex=u;break;}}
 var fEst=document.getElementById('f-est');
-fEst.value=estoqueAtual(item.id);
+var _atualEdit=estoqueAtual(item.id);
+fEst.value=_atualEdit;
 fEst.removeAttribute('readonly');
 fEst.style.background='';
 fEst.style.color='';
 var lEst=document.getElementById('f-est-label');
 if(lEst)lEst.textContent='Estoque Atual (editável)';
+document.getElementById('f-chegada').value=item.estoqueInicial||0;
+document.getElementById('f-chegada-orig').value=item.estoqueInicial||0;
+document.getElementById('f-estatual-orig').value=_atualEdit;
 document.getElementById('modal-cad-title').textContent='Editar — '+item.desc.substring(0,35);
 document.getElementById('modal-cad').style.display='flex';
 }
@@ -610,11 +627,23 @@ var editId=document.getElementById('f-edit-id').value;
 // FIX: preservar estoqueInicial original ao editar para nao corromper calculo de estoque
 // Calcular estoqueInicial para que estoqueAtual fique igual ao valor digitado
 // estoqueAtual = estoqueInicial + movs => estoqueInicial = valorDigitado - movs
-var _estoqIni=parseInt(document.getElementById('f-est').value)||0;
+var _chegadaVal=parseInt(document.getElementById('f-chegada').value)||0;
+var _chegadaOrig=parseInt(document.getElementById('f-chegada-orig').value)||0;
+var _estAtualVal=parseInt(document.getElementById('f-est').value)||0;
+var _estAtualOrig=parseInt(document.getElementById('f-estatual-orig').value)||0;
+var _estoqIni=_chegadaVal;
 if(editId){
-  var _somaMovs=0;
-  D.movs.filter(function(m){return m.itemId===editId;}).forEach(function(m){_somaMovs+=m.tipo==='entrada'?m.qty:-m.qty;});
-  _estoqIni=_estoqIni-_somaMovs;
+  if(_chegadaVal!==_chegadaOrig){
+    // usuario editou "Qtd Chegada" diretamente: usa esse valor como estoque inicial
+    _estoqIni=_chegadaVal;
+  }else if(_estAtualVal!==_estAtualOrig){
+    // usuario editou "Estoque Atual": recalcula o estoque inicial pra bater com o valor desejado
+    var _somaMovs=0;
+    D.movs.filter(function(m){return m.itemId===editId;}).forEach(function(m){_somaMovs+=m.tipo==='entrada'?m.qty:-m.qty;});
+    _estoqIni=_estAtualVal-_somaMovs;
+  }else{
+    _estoqIni=_chegadaOrig;
+  }
   if(_estoqIni<0)_estoqIni=0;
 }
 var obj={
@@ -822,10 +851,13 @@ tbody.innerHTML=h2;
 function abrirModalRedeSubcat(rede, subcat){
 var cats={agua:['Tubo PVC','Conexão PVC','Ferro Dúctil'],esgoto:['Tubo PVC','Conexão'],premoldado:['Pré-Moldado'],drenagem:['Tubo Concreto','Pré-Moldado']};
 document.getElementById('f-desc').value='';
-document.getElementById('f-codigo').value=proximoCodigo('rede_'+rede);
+document.getElementById('f-codigo').value=proximoCodigo(subcat);
 var _fEstRS=document.getElementById('f-est');
 _fEstRS.value='0';_fEstRS.removeAttribute('readonly');_fEstRS.style.background='';_fEstRS.style.color='';
 var _lEstRS=document.getElementById('f-est-label');if(_lEstRS)_lEstRS.textContent='Estoque Inicial';
+document.getElementById('f-chegada').value='0';
+document.getElementById('f-chegada-orig').value='0';
+document.getElementById('f-estatual-orig').value='0';
 document.getElementById('f-min').value='0';
 document.getElementById('f-edit-id').value='';
 document.getElementById('f-aba').value='rede_'+rede;
@@ -900,15 +932,18 @@ function editarItemRede(id){editarItem(id);}
 function abrirModalRede(rede){
 var cats={agua:['Tubo PVC','Conexão PVC','Ferro Dúctil'],esgoto:['Tubo PVC','Conexão'],premoldado:['Pré-Moldado'],drenagem:['Tubo Concreto','Pré-Moldado']};
 document.getElementById('f-desc').value='';
-document.getElementById('f-codigo').value=proximoCodigo('rede_'+rede);
+var c=cats[rede]||['Outros'];
+document.getElementById('f-cat').innerHTML=c.map(function(x){return '<option>'+x+'</option>';}).join('');
+document.getElementById('f-codigo').value=proximoCodigo(c[0]);
 var _fEstRG=document.getElementById('f-est');
 _fEstRG.value='0';_fEstRG.removeAttribute('readonly');_fEstRG.style.background='';_fEstRG.style.color='';
 var _lEstRG=document.getElementById('f-est-label');if(_lEstRG)_lEstRG.textContent='Estoque Inicial';
+document.getElementById('f-chegada').value='0';
+document.getElementById('f-chegada-orig').value='0';
+document.getElementById('f-estatual-orig').value='0';
 document.getElementById('f-min').value='0';
 document.getElementById('f-edit-id').value='';
 document.getElementById('f-aba').value='rede_'+rede;
-var c=cats[rede]||['Outros'];
-document.getElementById('f-cat').innerHTML=c.map(function(x){return '<option>'+x+'</option>';}).join('');
 document.getElementById('modal-cad-title').textContent='Novo Item — Rede '+rede.charAt(0).toUpperCase()+rede.slice(1);
 document.getElementById('modal-cad').style.display='flex';
 }
