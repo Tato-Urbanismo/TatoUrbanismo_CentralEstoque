@@ -175,6 +175,19 @@ tr:last-child td{border-bottom:none}
   <div class="sub-panel" id="sub-pat-canteiro_de_obras"><div class="slabel">🏗 Canteiro de Obras</div><div class="card"><div class="card-head"><span class="card-title">Patrimônio — Canteiro de Obras</span><div style="display:flex;gap:8px;align-items:center"><input class="srch" placeholder="Buscar..." oninput="renderPatSecao('canteiro_de_obras')" id="s-pat-canteiro_de_obras"><button class="btn btn-add" onclick="abrirModalPat('Canteiro de Obras')">+ Novo</button></div><span class="card-badge" id="c-pat-canteiro_de_obras">0</span></div><div class="scroll-t"><table><thead><tr><th class="col-cod">Nº Pat</th><th>Descrição</th><th>Marca</th><th>Modelo</th><th>Estado</th><th>Localização</th><th style="width:100px">Ações</th></tr></thead><tbody id="td-pat-canteiro_de_obras"></tbody></table></div></div></div>
 </div>
 <div class="panel" id="panel-relatorios"><div class="slabel">Geração de Relatórios</div>
+<div class="slabel">💾 Backup e Restauração</div>
+<div class="card" style="border:2px solid var(--green2);margin-bottom:20px">
+<div style="padding:14px 16px">
+<p style="font-size:12px;color:var(--muted);margin-bottom:10px">Todo dia, ao abrir o sistema pela primeira vez, um backup completo (itens + movimentações + patrimônio) é salvo automaticamente no seu computador. Você também pode baixar um backup manual a qualquer momento, ou restaurar um backup salvo.</p>
+<p style="font-size:11px;color:var(--green2);font-weight:700;margin-bottom:4px" id="backup-status">Último backup automático: verificando...</p>
+<p style="font-size:11px;color:var(--muted);margin-bottom:12px" id="backup-pasta-status">Pasta de backup: nenhuma escolhida (salvando em Downloads)</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<button class="btn btn-add" onclick="baixarBackup(false)">📥 Baixar Backup Agora</button>
+<label class="btn" style="background:var(--gold);color:#fff;cursor:pointer;margin-bottom:0">📤 Restaurar de um Backup<input type="file" accept="application/json" onchange="lerArquivoBackup(this)" style="display:none"></label>
+<button class="btn" style="background:var(--blue);color:#fff" onclick="escolherPastaBackup()">📁 Escolher Pasta de Backup</button>
+</div>
+</div>
+</div>
 <div class="slabel">🏗 Canteiro de Obras</div>
 <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px">
 <div class="card" style="padding:0"><div style="padding:10px 14px;border-bottom:1px solid var(--border);font-size:11px;font-weight:700">🧹 Limpeza</div><div style="padding:12px;display:flex;flex-direction:column;gap:6px"><button class="btn btn-add" style="font-size:10px;padding:5px" onclick="imprimirCat('Limpeza','Limpeza')">🖨 PDF</button><button class="btn" style="font-size:10px;padding:5px;background:var(--green2);color:#fff" onclick="exportarCat('Limpeza','Limpeza')">📊 Excel</button></div></div>
@@ -220,14 +233,158 @@ tr:last-child td{border-bottom:none}
 <script id="dados-raw" type="application/json">[["mat_001","DESINFETANTE TRIEL","Limpeza","GALÃO 5 LTS",6,2,"LMP-001"],["mat_002","BOM AR","Limpeza","UN 360ml",13,3,"LMP-002"],["mat_003","PAPEL HIGIÊNICO FOLHA DUPLA","Limpeza","PC 12 ROLOS",9,2,"LMP-003"],["mat_004","PAPEL HIGIÊNICO FOLHA SIMPLES","Limpeza","PC 4 ROLOS",0,2,"LMP-004"],["mat_005","DETERGENTE NEUTRO TRIEL","Limpeza","GALÃO 5 LTS",9,2,"LMP-005"],["mat_006","COPO DESCARTÁVEL 200ml","Limpeza","CX 100UN",3,1,"LMP-006"],["mat_007","SACO DE LIXO 20L","Limpeza","PC",7,2,"LMP-007"],["mat_008","SACO DE LIXO AZUL 100L","Limpeza","PC",0,1,"LMP-008"],["mat_009","SACO DE LIXO PRETO 100L","Limpeza","PC",0,1,"LMP-009"],["mat_010","SACO DE LIXO PRETO 150L","Limpeza","PC",1,1,"LMP-010"],["mat_011","ÁLCOOL","Limpeza","GALÃO 1 LTS",7,2,"LMP-011"],["mat_012","SABONETE LÍQUIDO","Limpeza","GALÃO 5 LTS",6,2,"LMP-012"],["mat_013","PEDRA SANITÁRIA TRIEL","Limpeza","un",18,5,"LMP-013"],["mat_014","ÁGUA SANITÁRIA TRIEL","Limpeza","GALÃO 5 LTS",8,2,"LMP-014"],["mat_015","CERA LÍQUIDA TRIEL","Limpeza","GALÃO 5 LTS",1,1,"LMP-015"],["mat_016","PAPEL TOALHA","Limpeza","FARDO",1,1,"LMP-016"],["mat_017","PANO DE CHÃO","Limpeza","un",11,3,"LMP-017"],["mat_018","LIMPADOR EM GEL","Limpeza","un",6,2,"LMP-018"],["mat_019","BAYGON","Limpeza","un",6,2,"LMP-019"],["mat_020","FLANELA","Limpeza","un",7,2,"LMP-020"],["mat_021","BUCHA DE COZINHA","Limpeza","un",8,3,"LMP-021"],["mat_022","ESCOVA SANITÁRIA","Limpeza","un",2,1,"LMP-022"],["mat_023","CORANTE LÍQUIDO","Limpeza","un",3,1,"LMP-023"],["mat_024","PILHAS AA PANASONIC","Escritório","PC",6,1,"ESC-001"],["mat_025","PILHAS AAA PANASONIC","Escritório","PC",1,1,"ESC-002"],["mat_026","COLA BRANCA","Escritório","un",1,1,"ESC-003"],["mat_027","FOLHA BRANCA A4","Escritório","PC",3,1,"ESC-004"],["mat_028","CAIXA DE GRAMPO BRW","Escritório","CX",1,1,"ESC-005"],["mat_029","CAIXA DE CLIPS BACCHI","Escritório","CX",1,1,"ESC-006"],["mat_030","CANETA ESFEROGRÁFICA","Escritório","CX",1,1,"ESC-007"],["mat_031","LÁPIS DE COR MULTICOLOR","Escritório","CX",1,0,"ESC-008"],["mat_032","CIMENTO CPII E","Cimento","sc",0,20,"CIM-001"],["mat_033","CIMENTO CPII F 32","Cimento","sc",49,20,"CIM-002"],["mat_034","CAL","Cimento","sc",9,5,"CIM-003"],["mat_035","CAMISETA MANGA LONGA - GG","Uniforme","un",0,2,"UNI-001"],["mat_036","CAMISETA MANGA LONGA - G","Uniforme","un",17,2,"UNI-002"],["mat_037","CAMISETA MANGA LONGA - M","Uniforme","un",50,2,"UNI-003"],["mat_038","CAMISETA MANGA LONGA - EXG","Uniforme","un",10,2,"UNI-004"],["mat_039","CALÇA - EXGG","Uniforme","un",1,1,"UNI-005"],["mat_040","CALÇA - EXG","Uniforme","un",16,2,"UNI-006"],["mat_041","CALÇA - G","Uniforme","un",21,2,"UNI-007"],["mat_042","CALÇA - M","Uniforme","un",45,2,"UNI-008"],["mat_043","CAMISA POLO - GG (ADMINISTRATIVO)","Uniforme","un",0,1,"UNI-009"],["mat_044","CAMISA SOCIAL - G (ADMINISTRATIVO)","Uniforme","un",0,1,"UNI-010"],["mat_045","CAMISA SOCIAL - M (ADMINISTRATIVO)","Uniforme","un",3,1,"UNI-011"],["mat_046","CAMISA SOCIAL - P (ADMINISTRATIVO)","Uniforme","un",3,1,"UNI-012"],["eq_001","LUVA EMBORRACHADA","EPI","un",45,10,"EPI-001"],["eq_002","LUVA DE COURO","EPI","un",27,10,"EPI-002"],["eq_003","LUVA DE VAQUETA","EPI","un",42,10,"EPI-003"],["eq_004","LUVA DE LATEX G9","EPI","un",6,5,"EPI-004"],["eq_005","LUVAS NITRÍLICAS","EPI","un",100,20,"EPI-005"],["eq_006","MÁSCARA DE PROTEÇÃO","EPI","un",218,20,"EPI-006"],["eq_007","MÁSCARA CIRÚRGICA","EPI","un",50,20,"EPI-007"],["eq_008","ÓCULOS DE PROTEÇÃO TRANSPARENTE","EPI","un",15,5,"EPI-008"],["eq_009","ÓCULOS DE PROTEÇÃO ESCURO","EPI","un",21,5,"EPI-009"],["eq_010","ABAFADOR SONO","EPI","un",3,2,"EPI-010"],["eq_011","PROTETOR AURICULAR (PONTA DE SILICONE)","EPI","un",30,10,"EPI-011"],["eq_012","COLETE REFLETIVO LARANJA","EPI","un",17,5,"EPI-012"],["eq_013","COLETE REFLETIVO AMARELO","EPI","un",2,5,"EPI-013"],["eq_014","BOTINA BICO DE PVC N°44","EPI","par",1,1,"EPI-014"],["eq_015","BOTINA BICO DE PVC N°43","EPI","par",1,1,"EPI-015"],["eq_016","BOTINA BICO DE PVC N°42","EPI","par",0,1,"EPI-016"],["eq_017","BOTINA BICO DE PVC N°41","EPI","par",3,1,"EPI-017"],["eq_018","BOTINA BICO DE PVC N°40","EPI","par",0,1,"EPI-018"],["eq_019","PROTETOR SOLAR","EPI","un",2,2,"EPI-019"],["eq_020","TOCA ÁRABE","EPI","un",14,5,"EPI-020"],["eq_021","P569206 - FILTRO HIDRÁULICO DONALDSON","Filtro","un",1,1,"FIL-001"],["eq_022","P829333 - FILTRO DE AR 2° DONALDSON","Filtro","un",1,1,"FIL-002"],["eq_023","P165705 - FILTRO HIDRÁULICO DONALDSON","Filtro","un",3,1,"FIL-003"],["eq_024","P551210 - FILTRO DE AR DONALDSON","Filtro","un",2,1,"FIL-004"],["eq_025","P828889 - FILTRO DE AR DONALDSON","Filtro","un",1,1,"FIL-005"],["eq_026","P550477 - FILTRO HIDRÁULICO DONALDSON","Filtro","un",1,1,"FIL-006"],["eq_027","P551423 - FILTRO DE COMBUSTÍVEL DONALDSON","Filtro","un",4,1,"FIL-007"],["eq_028","P551434 - FILTRO DE COMBUSTÍVEL DONALDSON","Filtro","un",4,1,"FIL-008"],["eq_029","P558615 - FILTRO DE ACEITE DONALDSON","Filtro","un",0,1,"FIL-009"],["eq_030","P551424 - FILTRO DE COMBUSTÍVEL DONALDSON","Filtro","un",2,1,"FIL-010"],["eq_031","P550588 - FILTRO DE COMBUSTÍVEL DONALDSON","Filtro","un",1,1,"FIL-011"],["eq_032","P558616 - FILTRO DE ACEITE DONALDSON","Filtro","un",1,1,"FIL-012"],["eq_033","W950/7 - FILTRO DE ÓLEO MANN FILTER","Filtro","un",2,1,"FIL-013"],["eq_034","W940/24 - FILTRO CARBURANTE MANN FILTER","Filtro","un",0,1,"FIL-014"],["eq_035","WK723 - FILTRO CARBURANTE MANN FILTER","Filtro","un",1,1,"FIL-015"],["eq_036","W950/16 - FILTRO DE ÓLEO MANN FILTER","Filtro","un",2,1,"FIL-016"],["eq_037","WK940/7 - FILTRO DE COMBUSTÍVEL MANN FILTER","Filtro","un",2,1,"FIL-017"],["eq_038","PLS417 - FILTRO DE ÓLEO TECFIL","Filtro","un",4,1,"FIL-018"],["eq_039","PC2/255 - FILTRO DE COMBUSTÍVEL TECFIL","Filtro","un",2,1,"FIL-019"],["eq_040","VA4896P - FILTRO DE AR UNIFILTER","Filtro","un",0,1,"FIL-020"],["eq_041","FABR2935 - FILTRO DE AR JAPANPARTS","Filtro","un",2,1,"FIL-021"],["eq_042","AE1078 - FILTRO DE AR 1° E 2° CASA DOS FILTROS","Filtro","un",1,1,"FIL-022"],["eq_043","P554407 - FILTRO DE ACEITE DONALDSON","Filtro","un",1,1,"FIL-023"],["eq_044","P917X - FILTRO DE COMBUSTÍVEL MANN FILTER","Filtro","un",2,1,"FIL-024"],["eq_045","FCO0722 - FILTRO DE COMBUSTÍVEL AUTHO MIX","Filtro","un",1,1,"FIL-025"],["eq_046","CF400/1 - FILTRO DE AR MANN FILTER","Filtro","un",2,1,"FIL-026"],["eq_047","8768299 - FILTRO DE AR CNH","Filtro","un",1,1,"FIL-027"],["eq_048","ENXADA","Ferramenta","un",8,0,"FER-001"],["eq_049","PÁ METISA","Ferramenta","un",8,0,"FER-002"],["eq_050","CAVADEIRA","Ferramenta","un",3,0,"FER-003"],["eq_051","PICARETA","Ferramenta","un",4,0,"FER-004"],["eq_052","CARRINHO DE MÃO","Ferramenta","un",1,0,"FER-005"],["eq_053","FOICE","Ferramenta","un",2,0,"FER-006"],["eq_054","ALABANCA PEQUENA","Ferramenta","un",2,0,"FER-007"],["eq_055","ALABANCA GRANDE","Ferramenta","un",3,0,"FER-008"],["eq_056","MACHADO","Ferramenta","un",1,0,"FER-009"],["eq_057","RÉGUA DE PEDREIRO","Ferramenta","un",2,0,"FER-010"],["eq_058","MARTELO","Ferramenta","un",3,0,"FER-011"],["eq_059","ALICATE","Ferramenta","un",1,0,"FER-012"],["eq_060","TRÚQUES","Ferramenta","un",1,0,"FER-013"],["eq_061","NÍVEL DE BOLHA GRANDE","Ferramenta","un",2,0,"FER-014"],["eq_062","NÍVEL BOLHA MÉDIO","Ferramenta","un",1,0,"FER-015"],["eq_063","NÍVEL BOLHA TRAPÉZIO","Ferramenta","un",2,0,"FER-016"],["eq_064","TALHADEIRA","Ferramenta","un",1,0,"FER-017"],["eq_065","SEGUETA","Ferramenta","un",2,0,"FER-018"],["eq_066","LÂMINA DE SEGUETA","Ferramenta","un",3,0,"FER-019"],["eq_067","ESQUADRO","Ferramenta","un",2,0,"FER-020"],["eq_068","COLHER DE PEDREIRO","Ferramenta","un",4,0,"FER-021"],["eq_069","ESTILETE","Ferramenta","un",1,0,"FER-022"],["eq_070","CARRETEL DE LINHA","Ferramenta","un",4,0,"FER-023"],["eq_071","LIMA","Ferramenta","un",1,0,"FER-024"],["eq_072","TRENA DE 8 METROS","Ferramenta","un",7,0,"FER-025"],["eq_073","DESEMPENADEIRA","Ferramenta","un",6,0,"FER-026"],["eq_074","PRUMO","Ferramenta","un",5,0,"FER-027"],["eq_075","PÉ DE CABRA","Ferramenta","un",1,0,"FER-028"],["eq_076","CABO PARA PICARETA","Ferramenta","un",2,0,"FER-029"],["eq_077","CABO PARA ENXADA","Ferramenta","un",8,0,"FER-030"],["eq_078","CHAVE L 14","Ferramenta","un",1,0,"FER-031"],["eq_079","METRO DE VERIFICAÇÃO","Ferramenta","un",1,0,"FER-032"],["eq_080","PINCEL","Ferramenta","un",2,0,"FER-033"],["eq_081","MARRETA","Ferramenta","un",1,0,"FER-034"],["eq_082","PENEIRA MÉDIA","Ferramenta","un",1,0,"FER-035"],["eq_083","PONTEIRA","Ferramenta","un",1,0,"FER-036"],["eq_084","BOMBA COSTAL","Ferramenta","un",3,0,"FER-037"],["eq_085","BROXA","Ferramenta","un",1,0,"FER-038"],["eq_086","BALDE","Ferramenta","un",6,0,"FER-039"],["eq_087","MARRETA GRANDE","Ferramenta","un",1,0,"FER-040"],["eq_088","MANGUEIRA DE NÍVEL","Ferramenta","un",1,0,"FER-041"],["eq_089","FITA MÉTRICA","Ferramenta","un",1,0,"FER-042"],["eq_090","ROÇADEIRA COSTAL STIHL FS220","Mecânico","un",1,0,"MEC-001"],["eq_091","ROÇADEIRA COSTAL STIHL FS291","Mecânico","un",1,0,"MEC-002"],["eq_092","FURADEIRA DE IMPACTO BOSCH 750W","Elétrico","un",1,0,"ELE-001"],["eq_093","SERRA CIRCULAR DEWALT DW862-B2","Elétrico","un",1,0,"ELE-002"],["eq_094","COMPRESSOR GRANDE MOTOMIL","Mecânico","un",1,0,"MEC-003"],["eq_095","COMPRESSOR PEQUENO","Mecânico","un",1,0,"MEC-004"],["eq_096","COMPACTADOR MANUAL","Mecânico","un",1,0,"MEC-005"],["eq_097","BETONEIRA","Mecânico","un",1,0,"MEC-006"],["eq_098","LIXADEIRA","Elétrico","un",1,0,"ELE-003"],["eq_099","POLITRIZ","Elétrico","un",1,0,"ELE-004"],["eq_100","PISTOLA DE PINTURA","Elétrico","un",2,0,"ELE-005"],["eq_101","MACACO HIDRÁULICO","Mecânico","un",1,0,"MEC-007"],["eq_102","BATERIA 105 AMP","Elétrico","un",1,0,"ELE-006"],["eq_103","CABO CHUPETA","Elétrico","un",1,0,"ELE-007"],["eq_104","ENGRAXADEIRA","Mecânico","un",1,0,"MEC-008"],["eq_105","NÍVEL LASER","Medição","un",1,0,"MED-001"],["eq_106","APLICADOR DE SILICONE","Ferramenta","un",2,0,"FER-043"],["eq_107","CATRACA","Ferramenta","un",1,0,"FER-044"],["eq_108","BOMBINHA DE ENCHER PNEU","Mecânico","un",1,0,"MEC-009"],["eq_109","CHAVE DE RODA","Ferramenta","un",1,0,"FER-045"],["eq_110","EXTENSÃO DE ENERGIA 20M","Elétrico","un",1,0,"ELE-008"],["eq_111","ROÇADEIRA MANUAL","Mecânico","un",1,0,"MEC-010"],["eq_112","CARREGADOR DE BATERIA VONDER","Elétrico","un",1,0,"ELE-009"],["raa_001","TUBO PVC 12 JE PBA DN100","Tubo PVC","BR",50,0,"agua","TPV-001"],["raa_002","TUBO PVC 12 JE PBA DN50","Tubo PVC","BR",1541,0,"agua","TPV-002"],["raa_003","TUBO PVC 12 JE PBA DN75","Tubo PVC","BR",151,0,"agua","TPV-003"],["raa_004","TUBO PVC DEFOFO 1 MPA DN150","Tubo PVC","BR",55,0,"agua","TPV-004"],["raa_005","ANEL BORRACHA PBA DN50","Conexão PVC","UN",120,0,"agua","CPV-001"],["raa_006","ANEL BORRACHA PBA DN75","Conexão PVC","UN",86,0,"agua","CPV-002"],["raa_007","ANEL BORRACHA PBA DN100","Conexão PVC","UN",35,0,"agua","CPV-003"],["raa_008","ABRAÇADEIRA METÁLICA DN100","Conexão PVC","UN",0,0,"agua","CPV-004"],["raa_009","ABRAÇADEIRA METÁLICA DN150","Conexão PVC","UN",0,0,"agua","CPV-005"],["raa_010","ADAPTADOR PVC BSA PBA X PTA FOFO DN100","Conexão PVC","UN",0,0,"agua","CPV-006"],["raa_011","ADAPTADOR PVC BSA PBA X PTA FOFO DN75X80","Conexão PVC","UN",0,0,"agua","CPV-007"],["raa_012","ARRUELAS PARA FLANGES DN100","Conexão PVC","UN",0,0,"agua","CPV-008"],["raa_013","ARRUELAS PARA FLANGES DN150","Conexão PVC","UN",0,0,"agua","CPV-009"],["raa_014","ARRUELAS PARA FLANGES DN80","Conexão PVC","UN",0,0,"agua","CPV-010"],["raa_015","COLLAR DE TOMADA PVC C/TRAVAS DN75 X 3/4","Conexão PVC","UN",5,0,"agua","CPV-011"],["raa_016","CURVA 11° PVC PBA DN75","Conexão PVC","UN",0,0,"agua","CPV-012"],["raa_017","CURVA 22° PVC PBA DN50","Conexão PVC","UN",7,0,"agua","CPV-013"],["raa_018","CURVA 45° PVC PBA DN100","Conexão PVC","UN",2,0,"agua","CPV-014"],["raa_019","CURVA 45° PVC PBA DN50","Conexão PVC","UN",86,0,"agua","CPV-015"],["raa_020","CURVA 45° PVC PBA DN75","Conexão PVC","UN",19,0,"agua","CPV-016"],["raa_021","CURVA 90° PVC PBA DN100","Conexão PVC","UN",14,0,"agua","CPV-017"],["raa_022","CURVA 90° PVC PBA DN75","Conexão PVC","UN",27,0,"agua","CPV-018"],["raa_023","LUVA DE PVC PBA DN50","Conexão PVC","UN",26,0,"agua","CPV-019"],["raa_024","LUVA DE PVC PBA DN100","Conexão PVC","UN",10,0,"agua","CPV-020"],["raa_025","PARAFUSOS PARA FLANGES PN-10 DN100 (16X90mm)","Conexão PVC","UN",0,0,"agua","CPV-021"],["raa_026","PARAFUSOS PARA FLANGES PN-10 DN150 (20X90mm)","Conexão PVC","UN",0,0,"agua","CPV-022"],["raa_027","PARAFUSOS PARA FLANGES PN-10 DN80 (16X80mm)","Conexão PVC","UN",0,0,"agua","CPV-023"],["raa_028","PASTA LUBRIFICANTE","Conexão PVC","UN",76,0,"agua","CPV-024"],["raa_029","REDUÇÃO PB PVC PBA DN75 X DN50","Conexão PVC","UN",17,0,"agua","CPV-025"],["raa_030","REDUÇÃO PB PVC PBA DN100 X DN50","Conexão PVC","UN",3,0,"agua","CPV-026"],["raa_031","REDUÇÃO PB PVC PBA DN100 X DN75","Conexão PVC","UN",6,0,"agua","CPV-027"],["raa_032","TÊ DE PVC PBA DN50","Conexão PVC","UN",34,0,"agua","CPV-028"],["raa_033","TÊ DE PVC PBA DN100","Conexão PVC","UN",5,0,"agua","CPV-029"],["raa_034","TÊ DE PVC PBA DN75","Conexão PVC","UN",13,0,"agua","CPV-030"],["raa_035","VENTOSA COMBINADA DN3/4","Conexão PVC","UN",5,0,"agua","CPV-031"],["raa_036","CURVA 11° PVC PBA DN50","Conexão PVC","UN",18,0,"agua","CPV-032"],["raa_037","CURVA 22° PVC PBA DN75","Conexão PVC","UN",16,0,"agua","CPV-033"],["raa_038","LUVA DE PVC PBA DN75","Conexão PVC","UN",9,0,"agua","CPV-034"],["raa_039","TÊ DE PVC PBA DN100 X DN75","Conexão PVC","UN",0,0,"agua","CPV-035"],["raa_040","TÊ DE PVC PBA DN100 X DN50","Conexão PVC","UN",0,0,"agua","CPV-036"],["raa_041","ADAPTADOR DN100","Conexão PVC","UN",1,0,"agua","CPV-037"],["raa_042","ADAPTADOR DN75","Conexão PVC","UN",12,0,"agua","CPV-038"],["raa_043","ADAPTADOR DN100 X DN50","Conexão PVC","UN",0,0,"agua","CPV-039"],["raa_044","ADAPTADOR DN75 X DN50","Conexão PVC","UN",0,0,"agua","CPV-040"],["raa_045","CAP DN50","Conexão PVC","UN",5,0,"agua","CPV-041"],["raa_046","TÊ DE REDUÇÃO DN50 X DN75","Conexão PVC","UN",1,0,"agua","CPV-042"],["raa_047","CRUZETA DN50","Conexão PVC","UN",2,0,"agua","CPV-043"],["raa_048","TÊ DE REDUÇÃO DN100 X DN75","Conexão PVC","UN",2,0,"agua","CPV-044"],["raa_049","TÊ DE REDUÇÃO DN100 X DN50","Conexão PVC","UN",6,0,"agua","CPV-045"],["raa_050","CURVA 90° PVC PBA DN50","Conexão PVC","UN",2,0,"agua","CPV-046"],["raa_051","LUVA DEFOFO DN100","Conexão PVC","UN",2,0,"agua","CPV-047"],["raa_052","LUVA DEFOFO DN150","Conexão PVC","UN",0,0,"agua","CPV-048"],["raa_053","CURVA 22° COM BOLSA JGS DN150","Ferro Dúctil","PÇ",6,0,"agua","FDU-001"],["raa_054","CURVA 45° COM BOLSA JGS DN150","Ferro Dúctil","PÇ",8,0,"agua","FDU-002"],["raa_055","CURVA 90° COM BOLSA JGS DN80","Ferro Dúctil","PÇ",8,0,"agua","FDU-003"],["raa_056","CURVA DISSIMÉTRICA COM FLANGES PN-10 DN100","Ferro Dúctil","PÇ",1,0,"agua","FDU-004"],["raa_057","EXTREMIDADE COM FLANGES E ABA DE VEDAÇÃO PN-10 DN80 L=0,70M","Ferro Dúctil","PÇ",12,0,"agua","FDU-005"],["raa_058","HIDRANTE DE COLUNA PN-10 DN100 SIMPLES","Ferro Dúctil","PÇ",1,0,"agua","FDU-006"],["raa_059","JUNTA DE DESMONTAGEM TRAVADA AXIALMENTE COM TIRANTES PN-10 DN80","Ferro Dúctil","PÇ",8,0,"agua","FDU-007"],["raa_060","REDUÇÃO COM FLANGES CONCÊNTRICA PN-10 DN150XDN100","Ferro Dúctil","PÇ",1,0,"agua","FDU-008"],["raa_061","REDUÇÃO COM PONTA E BOLSA JGS DN150XDN100","Ferro Dúctil","PÇ",3,0,"agua","FDU-009"],["raa_062","REDUÇÃO COM PONTA E BOLSA JGS DN150XDN80","Ferro Dúctil","PÇ",2,0,"agua","FDU-010"],["raa_063","REGISTRO C/FLANGES E CUNHA DE BORRACHA CORPO CURTO C/VOLANTE PN-10 DN80","Ferro Dúctil","PÇ",16,0,"agua","FDU-011"],["raa_064","REGISTRO C/FLANGES E CUNHA DE BORRACHA CORPO CURTO C/CABEÇOTE PN-10 DN150","Ferro Dúctil","PÇ",1,0,"agua","FDU-012"],["raa_065","REGISTRO DE GAVETA C/BOLSA E CUNHA DE BORRACHA PARA TUBOS PBA C/CABEÇOTE DN100","Ferro Dúctil","PÇ",4,0,"agua","FDU-013"],["raa_066","REGISTRO DE GAVETA C/BOLSA E CUNHA DE BORRACHA PARA TUBOS PBA C/CABEÇOTE DN50","Ferro Dúctil","PÇ",5,0,"agua","FDU-014"],["raa_067","TAMPA PARA REGISTRO 250X250mm - TAMPÃO PARA HIDRANTE","Ferro Dúctil","PÇ",1,0,"agua","FDU-015"],["raa_068","TÊ COM BOLSAS JGS DN80","Ferro Dúctil","PÇ",8,0,"agua","FDU-016"],["raa_069","TÊ COM BOLSAS JGS DN150","Ferro Dúctil","PÇ",3,0,"agua","FDU-017"],["raa_070","TÊ DE REDUÇÃO COM BOLSAS JGS DN200XDN150","Ferro Dúctil","PÇ",2,0,"agua","FDU-018"],["raa_071","TOCO COM FLANGES DN80 L=0,25M","Ferro Dúctil","PÇ",8,0,"agua","FDU-019"],["raa_072","TOCO COM FLANGES DN80 L=0,50M","Ferro Dúctil","PÇ",8,0,"agua","FDU-020"],["raa_073","TUBO CILÍNDRICO DN150 L=4000","Ferro Dúctil","PÇ",2,0,"agua","FDU-021"],["raa_074","TUBO CILÍNDRICO DN80 L=0,58","Ferro Dúctil","PÇ",8,0,"agua","FDU-022"],["raa_075","TUBO COM FLANGE E PONTA PN-10 DN150 L=0,63m","Ferro Dúctil","PÇ",1,0,"agua","FDU-023"],["raa_076","TUBO COM FLANGE E PONTA PN-10 DN150 L=5,00M","Ferro Dúctil","PÇ",4,0,"agua","FDU-024"],["raa_077","TUBO COM FLANGE PN-10 DN150 L=5,00M","Ferro Dúctil","PÇ",2,0,"agua","FDU-025"],["raa_078","TUBO COM FLANGES PN-10 DN100 L=0,31m","Ferro Dúctil","PÇ",1,0,"agua","FDU-026"],["raa_079","TUBO COM PONTA E BOLSA DN80 L=0,68M","Ferro Dúctil","PÇ",4,0,"agua","FDU-027"],["raa_080","VÁLVULA HIDRÁULICA REDUTORA DE PRESSÃO BERMAD PN-10 DN80","Ferro Dúctil","PÇ",0,0,"agua","FDU-028"],["raa_081","FILTRO TIPO Y C/FLANGES PN10 DN80","Ferro Dúctil","PÇ",0,0,"agua","FDU-029"],["res_001","TUBO PVC OCRE PONTA E BOLSA DN100","Tubo PVC","BR",1368,0,"esgoto","TPV-005"],["res_002","TUBO PVC OCRE PONTA E BOLSA DN150","Tubo PVC","BR",267,0,"esgoto","TPV-006"],["res_003","ANEL OCRE DN100","Conexão","UN",1078,0,"esgoto","CON-001"],["res_004","ANEL OCRE DN150","Conexão","UN",35,0,"esgoto","CON-002"],["res_005","CAP DE PVC OCRE DN100","Conexão","UN",62,0,"esgoto","CON-003"],["res_006","CAP DE PVC OCRE DN150","Conexão","UN",1,0,"esgoto","CON-004"],["res_007","LUVA DE PVC OCRE DN100","Conexão","UN",19,0,"esgoto","CON-005"],["res_008","TÊ DE PVC OCRE DN100","Conexão","UN",107,0,"esgoto","CON-006"],["res_009","TÊ DE PVC OCRE DN150","Conexão","UN",5,0,"esgoto","CON-007"],["res_010","LUVA DE PVC OCRE DN150","Conexão","UN",5,0,"esgoto","CON-008"],["res_011","LUVA DE PVC OCRE DN75","Conexão","UN",0,0,"esgoto","CON-009"],["res_012","CURVA 22° DE PVC OCRE DN100","Conexão","UN",4,0,"esgoto","CON-010"],["res_013","CURVA 90° DE PVC OCRE DN150","Conexão","UN",2,0,"esgoto","CON-011"],["rpm_001","TUBO DE CONCRETO PV (0,60 X 0,60)","Pré-Moldado","BR",155,0,"premoldado","PMO-001"],["rpm_002","TUBO DE CONCRETO PV (0,60 X 0,40)","Pré-Moldado","BR",0,0,"premoldado","PMO-002"],["rpm_003","TUBO DE CONCRETO PV (0,60 X 0,20)","Pré-Moldado","BR",0,0,"premoldado","PMO-003"],["rpm_004","TUBO DE CONCRETO PV (0,90 X 0,60)","Pré-Moldado","BR",0,0,"premoldado","PMO-004"],["rpm_005","LAJE DE REDUÇÃO (1,14 X 0,10)","Pré-Moldado","BR",0,0,"premoldado","PMO-005"],["rpm_006","ANEL E TAMPÃO","Pré-Moldado","BR",19,0,"premoldado","PMO-006"],["rdr_001","TUBO DN 600","Tubo Concreto","BR",13,0,"drenagem","TCO-001"],["rdr_002","TUBO DN 800","Tubo Concreto","BR",5,0,"drenagem","TCO-002"],["rdr_003","TUBO DN 1000","Tubo Concreto","BR",3,0,"drenagem","TCO-003"],["rdr_004","TUBO DN 1200","Tubo Concreto","BR",47,0,"drenagem","TCO-004"],["rdr_005","TUBO DN 1500","Tubo Concreto","BR",147,0,"drenagem","TCO-005"],["rdr_006","LAJE INFERIOR","Pré-Moldado","BR",2,0,"drenagem","PMO-007"],["rdr_007","LAJE SUPERIOR","Pré-Moldado","BR",4,0,"drenagem","PMO-008"],["rdr_008","BLOCOS","Pré-Moldado","UN",1321,0,"drenagem","PMO-009"]]</script>
 <script>
 var STORAGE_KEY='tato_estoque_v8';
-function carregarLocal(){try{var s=localStorage.getItem(STORAGE_KEY);if(s){var l=JSON.parse(s);var minimoMap={};var _estoqLcMap={};var _codLcMap={};(l.itens||[]).forEach(function(it){if(it.minimo!==undefined)minimoMap[it.id]=it.minimo;if(it.estoqueInicial!==undefined)_estoqLcMap[it.id]=it.estoqueInicial;if(it.codigo)_codLcMap[it.id]=it.codigo;});D.itens=DADOS_INICIAIS.itens.map(function(o){var c={id:o.id,desc:o.desc,cat:o.cat,un:o.un,estoqueInicial:o.estoqueInicial,minimo:o.minimo,codigo:o.codigo};if(o.rede)c.rede=o.rede;if(minimoMap[c.id]!==undefined)c.minimo=minimoMap[c.id];if(_estoqLcMap[c.id]!==undefined)c.estoqueInicial=_estoqLcMap[c.id];if(_codLcMap[c.id])c.codigo=_codLcMap[c.id];return c;});var idsIni={};DADOS_INICIAIS.itens.forEach(function(it){idsIni[it.id]=true;});(l.itens||[]).forEach(function(it){if(!idsIni[it.id])D.itens.push(it);});D.movs=l.movs||[];}else{D.itens=DADOS_INICIAIS.itens.map(function(o){var c={id:o.id,desc:o.desc,cat:o.cat,un:o.un,estoqueInicial:o.estoqueInicial,minimo:o.minimo,codigo:o.codigo};if(o.rede)c.rede=o.rede;return c;});D.movs=[];salvar();}}catch(e){D.itens=DADOS_INICIAIS.itens.map(function(o){var c={id:o.id,desc:o.desc,cat:o.cat,un:o.un,estoqueInicial:o.estoqueInicial,minimo:o.minimo,codigo:o.codigo};if(o.rede)c.rede=o.rede;return c;});D.movs=[];}enriquecerItens();
+function carregarLocal(){try{var s=localStorage.getItem(STORAGE_KEY);if(s){var l=JSON.parse(s);var minimoMap={};var _estoqLcMap={};var _codLcMap={};var _chegadaLcMap={};(l.itens||[]).forEach(function(it){if(it.minimo!==undefined)minimoMap[it.id]=it.minimo;if(it.estoqueInicial!==undefined)_estoqLcMap[it.id]=it.estoqueInicial;if(it.codigo)_codLcMap[it.id]=it.codigo;if(it.chegada!==undefined)_chegadaLcMap[it.id]=it.chegada;});D.itens=DADOS_INICIAIS.itens.map(function(o){var c={id:o.id,desc:o.desc,cat:o.cat,un:o.un,estoqueInicial:o.estoqueInicial,minimo:o.minimo,codigo:o.codigo};if(o.rede)c.rede=o.rede;if(minimoMap[c.id]!==undefined)c.minimo=minimoMap[c.id];if(_estoqLcMap[c.id]!==undefined)c.estoqueInicial=_estoqLcMap[c.id];if(_codLcMap[c.id])c.codigo=_codLcMap[c.id];if(_chegadaLcMap[c.id]!==undefined)c.chegada=_chegadaLcMap[c.id];return c;});var idsIni={};DADOS_INICIAIS.itens.forEach(function(it){idsIni[it.id]=true;});(l.itens||[]).forEach(function(it){if(!idsIni[it.id])D.itens.push(it);});D.movs=l.movs||[];}else{D.itens=DADOS_INICIAIS.itens.map(function(o){var c={id:o.id,desc:o.desc,cat:o.cat,un:o.un,estoqueInicial:o.estoqueInicial,minimo:o.minimo,codigo:o.codigo};if(o.rede)c.rede=o.rede;return c;});D.movs=[];salvar();}}catch(e){D.itens=DADOS_INICIAIS.itens.map(function(o){var c={id:o.id,desc:o.desc,cat:o.cat,un:o.un,estoqueInicial:o.estoqueInicial,minimo:o.minimo,codigo:o.codigo};if(o.rede)c.rede=o.rede;return c;});D.movs=[];}enriquecerItens();
 try{var ls2=localStorage.getItem(STORAGE_KEY);if(ls2){var ld=JSON.parse(ls2);if(ld.patrimonio&&ld.patrimonio.length)PATRIMONIO=ld.patrimonio;}}catch(e){}
-renderAll();var el=document.getElementById('save-ind');if(el){el.textContent='offline';el.style.color='var(--gold)';}}
+renderAll();var el=document.getElementById('save-ind');if(el){el.textContent='offline';el.style.color='var(--gold)';}verificarBackupAutomatico();}
 function enriquecerItens(){var codMap={};DADOS_INICIAIS.itens.forEach(function(o){if(o.codigo)codMap[o.id]=o.codigo;});var mudou=false;D.itens.forEach(function(i){if(!i.codigo&&codMap[i.id]){i.codigo=codMap[i.id];mudou=true;}});if(mudou)salvar();}
 function gerarHTML(titulo,itens){var data=new Date().toLocaleDateString('pt-BR');var rows=itens.map(function(i){var a=estoqueAtual(i.id);var cat=i.rede?('Rede '+i.rede.charAt(0).toUpperCase()+i.rede.slice(1)):i.cat;var st=a<=0?'ZERADO':(a<(i.minimo||0)?'BAIXO':'OK');var cor=a<=0?'#c0392b':(a<(i.minimo||0)?'#b8860a':'#2d7a40');return '<tr><td>'+(i.codigo||'-')+'</td><td>'+i.desc+'</td><td>'+cat+'</td><td>'+i.un+'</td><td style="text-align:right">'+a+'</td><td style="text-align:right">'+(i.minimo||0)+'</td><td style="color:'+cor+';font-weight:700">'+st+'</td></tr>';}).join('');return '<html><head><title>'+titulo+'</title><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;font-size:10pt;margin:20px}h1{font-size:14pt}p{font-size:9pt;color:#666;margin-bottom:12px}table{width:100%;border-collapse:collapse}th{background:#0d1117;color:#fff;padding:6px 8px;text-align:left;font-size:9pt}td{padding:5px 8px;border-bottom:1px solid #ddd;font-size:9pt}tr:nth-child(even){background:#f9f9f9}</style></head><body><h1>'+titulo+' — Tato Urbanismo</h1><p>Data: '+data+' | Total: '+itens.length+' itens</p><table><thead><tr><th>Nº</th><th>Descrição</th><th>Categoria</th><th>Un</th><th>Estoque</th><th>Mínimo</th><th>Status</th></tr></thead><tbody>'+rows+'</tbody></table></body></html>';}
 function gerarCSV(itens){var h='N\u00ba;Descri\u00e7\u00e3o;Categoria;Unidade;Estoque;M\u00ednimo;Status\r\n';itens.forEach(function(i){var a=estoqueAtual(i.id);var cat=i.rede?('Rede '+i.rede.charAt(0).toUpperCase()+i.rede.slice(1)):i.cat;var st=a<=0?'ZERADO':(a<(i.minimo||0)?'BAIXO':'OK');h+=(i.codigo||'-')+';'+i.desc.replace(/;/g,',')+';'+cat+';'+i.un+';'+a+';'+(i.minimo||0)+';'+st+'\r\n';});return h;}
 function abrirPDF(titulo,itens){var w=window.open('','_blank');w.document.write(gerarHTML(titulo,itens));w.document.close();setTimeout(function(){w.print();},500);}
 function baixarCSV(itens,nome){var b=new Blob(['\uFEFF'+gerarCSV(itens)],{type:'text/csv;charset=utf-8'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=nome+'_'+new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')+'.csv';a.click();URL.revokeObjectURL(u);}
+var BACKUP_KEY='tato_ultimo_backup_auto';
+function gerarBackupJSON(){
+  return JSON.stringify({
+    _tipo:'backup_tato_estoque',
+    _geradoEm:new Date().toISOString(),
+    itens:D.itens,
+    movs:D.movs,
+    patrimonio:PATRIMONIO
+  },null,2);
+}
+// --- IndexedDB pra guardar a referência da pasta escolhida entre sessões ---
+function _abrirDBBackup(){
+  return new Promise(function(resolve,reject){
+    var req=indexedDB.open('tato_backup_db',1);
+    req.onupgradeneeded=function(){req.result.createObjectStore('handles');};
+    req.onsuccess=function(){resolve(req.result);};
+    req.onerror=function(){reject(req.error);};
+  });
+}
+function salvarPastaHandle(handle){
+  return _abrirDBBackup().then(function(db){
+    return new Promise(function(resolve,reject){
+      var tx=db.transaction('handles','readwrite');
+      tx.objectStore('handles').put(handle,'pastaBackup');
+      tx.oncomplete=function(){resolve();};
+      tx.onerror=function(){reject(tx.error);};
+    });
+  });
+}
+function carregarPastaHandle(){
+  return _abrirDBBackup().then(function(db){
+    return new Promise(function(resolve){
+      var tx=db.transaction('handles','readonly');
+      var req=tx.objectStore('handles').get('pastaBackup');
+      req.onsuccess=function(){resolve(req.result||null);};
+      req.onerror=function(){resolve(null);};
+    });
+  }).catch(function(){return null;});
+}
+function atualizarStatusPasta(handle){
+  var el=document.getElementById('backup-pasta-status');
+  if(!el)return;
+  if(!('showDirectoryPicker' in window)){
+    el.textContent='Pasta de backup: recurso não suportado neste navegador (use Chrome ou Edge) — salvando em Downloads';
+  }else if(handle){
+    el.textContent='Pasta de backup: "'+handle.name+'"';
+  }else{
+    el.textContent='Pasta de backup: nenhuma escolhida (salvando em Downloads)';
+  }
+}
+async function escolherPastaBackup(){
+  if(!('showDirectoryPicker' in window)){
+    alert('Esse recurso só funciona no Chrome ou Edge, no computador. Nesse navegador os backups vão continuar sendo salvos na pasta Downloads.');
+    return;
+  }
+  try{
+    var handle=await window.showDirectoryPicker({id:'tato-backup',mode:'readwrite'});
+    await salvarPastaHandle(handle);
+    atualizarStatusPasta(handle);
+  }catch(e){/* usuário cancelou a escolha, tudo bem */}
+}
+async function escreverBackupNaPasta(handle,filename,conteudo){
+  var fileHandle=await handle.getFileHandle(filename,{create:true});
+  var writable=await fileHandle.createWritable();
+  await writable.write(conteudo);
+  await writable.close();
+}
+function baixarViaDownload(filename,conteudo){
+  var b=new Blob([conteudo],{type:'application/json'});
+  var u=URL.createObjectURL(b);
+  var a=document.createElement('a');
+  a.href=u;a.download=filename;a.click();
+  URL.revokeObjectURL(u);
+}
+async function baixarBackup(auto){
+  var agora=new Date();
+  var ts=agora.toLocaleDateString('pt-BR').replace(/\//g,'-')+'_'+String(agora.getHours()).padStart(2,'0')+'h'+String(agora.getMinutes()).padStart(2,'0');
+  var filename='backup_tato_estoque_'+ts+(auto?'_automatico':'')+'.json';
+  var conteudo=gerarBackupJSON();
+  var salvouNaPasta=false;
+  var handle=await carregarPastaHandle();
+  if(handle){
+    try{
+      var perm=await handle.queryPermission({mode:'readwrite'});
+      if(perm!=='granted'&&!auto){
+        // so pede permissao com prompt se for acao manual (tem gesto do usuario)
+        perm=await handle.requestPermission({mode:'readwrite'});
+      }
+      if(perm==='granted'){
+        await escreverBackupNaPasta(handle,filename,conteudo);
+        salvouNaPasta=true;
+      }
+    }catch(e){salvouNaPasta=false;}
+  }
+  if(!salvouNaPasta){
+    baixarViaDownload(filename,conteudo);
+  }
+  var el=document.getElementById('backup-status');
+  if(el)el.textContent=(auto?'Último backup automático: ':'Último backup manual: ')+agora.toLocaleDateString('pt-BR')+' '+String(agora.getHours()).padStart(2,'0')+':'+String(agora.getMinutes()).padStart(2,'0')+(salvouNaPasta?' (na pasta escolhida)':' (em Downloads)');
+  atualizarStatusPasta(handle);
+}
+async function verificarBackupAutomatico(){
+  var handle=await carregarPastaHandle();
+  atualizarStatusPasta(handle);
+  var hoje=hoje_str();
+  var ultimo=localStorage.getItem(BACKUP_KEY);
+  var el=document.getElementById('backup-status');
+  if(ultimo!==hoje){
+    await baixarBackup(true);
+    localStorage.setItem(BACKUP_KEY,hoje);
+  }else if(el){
+    el.textContent='Último backup automático: hoje ('+hoje.split('-').reverse().join('/')+')';
+  }
+}
+function hoje_str(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function lerArquivoBackup(input){
+  var arquivo=input.files[0];
+  if(!arquivo)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    importarBackup(e.target.result);
+    input.value='';
+  };
+  reader.readAsText(arquivo);
+}
+function importarBackup(jsonTexto){
+  var dados;
+  try{dados=JSON.parse(jsonTexto);}catch(e){alert('Arquivo inválido: não é um JSON válido.');return;}
+  if(!dados||!Array.isArray(dados.itens)){alert('Arquivo inválido: não parece ser um backup deste sistema.');return;}
+  var dataBk=dados._geradoEm?new Date(dados._geradoEm).toLocaleString('pt-BR'):'data desconhecida';
+  var msg='Restaurar este backup?\n\n'+
+    'Gerado em: '+dataBk+'\n'+
+    'Itens: '+dados.itens.length+'\n'+
+    'Movimentações: '+(dados.movs?dados.movs.length:0)+'\n'+
+    'Patrimônio: '+(dados.patrimonio?dados.patrimonio.length:0)+'\n\n'+
+    'ATENÇÃO: isso vai substituir TODOS os dados atuais pelos deste backup. Ação irreversível.';
+  if(!confirm(msg))return;
+  D.itens=dados.itens;
+  D.movs=dados.movs||[];
+  if(dados.patrimonio)PATRIMONIO=dados.patrimonio;
+  salvar();
+  renderAll();
+  alert('Backup restaurado com sucesso.');
+}
 function imprimirCat(cat,nome){abrirPDF(nome,D.itens.filter(function(i){return !i.rede&&i.cat===cat;}));}
 function exportarCat(cat,nome){baixarCSV(D.itens.filter(function(i){return !i.rede&&i.cat===cat;}),nome);}
 function imprimirCats(cats,nome){abrirPDF(nome,D.itens.filter(function(i){return !i.rede&&cats.indexOf(i.cat)>=0;}));}
@@ -363,11 +520,12 @@ db.collection('estoque').doc('dados').get().then(function(doc){
   if(done)return;done=true;clearTimeout(timer);
   if(doc.exists){
     var d=doc.data();
-    var minimoMap={};var _estoqFbMap={};var _codFbMap={};
+    var minimoMap={};var _estoqFbMap={};var _codFbMap={};var _chegadaFbMap={};
     (d.itens||[]).forEach(function(it){
       if(it.minimo!==undefined)minimoMap[it.id]=it.minimo;
       if(it.estoqueInicial!==undefined)_estoqFbMap[it.id]=it.estoqueInicial;
       if(it.codigo)_codFbMap[it.id]=it.codigo;
+      if(it.chegada!==undefined)_chegadaFbMap[it.id]=it.chegada;
     });
     D.itens=DADOS_INICIAIS.itens.map(function(o){
       var c={id:o.id,desc:o.desc,cat:o.cat,un:o.un,estoqueInicial:o.estoqueInicial,minimo:o.minimo,codigo:o.codigo};
@@ -375,6 +533,7 @@ db.collection('estoque').doc('dados').get().then(function(doc){
       if(minimoMap[c.id]!==undefined)c.minimo=minimoMap[c.id];
       if(_estoqFbMap[c.id]!==undefined)c.estoqueInicial=_estoqFbMap[c.id];
       if(_codFbMap[c.id])c.codigo=_codFbMap[c.id];
+      if(_chegadaFbMap[c.id]!==undefined)c.chegada=_chegadaFbMap[c.id];
       return c;
     });
     var idsIni={};
@@ -386,7 +545,8 @@ db.collection('estoque').doc('dados').get().then(function(doc){
     db.collection('patrimonio').doc('dados').get().then(function(pdoc){
       if(pdoc.exists&&pdoc.data().itens)PATRIMONIO=pdoc.data().itens;
       renderAll();
-    }).catch(function(){renderAll();});
+      verificarBackupAutomatico();
+    }).catch(function(){renderAll();verificarBackupAutomatico();});
     var el2=document.getElementById('save-ind');
     if(el2){el2.textContent='online';el2.style.color='var(--green)';}
   }else{
@@ -753,6 +913,34 @@ if(tipo==='saida'&&qty>saldo){if(!confirm('Qtd maior que o estoque atual ('+sald
 var novoSaldo=tipo==='entrada'?saldo+qty:Math.max(0,saldo-qty);
 D.movs.push({id:gerarId(),itemId:itemId,tipo:tipo,qty:qty,data:document.getElementById('fm-data').value||hoje(),obs:document.getElementById('fm-obs').value.trim(),saldo:novoSaldo});
 salvar();fecharModalDireto('modal-mov');renderAll();
+}
+// FUNÇÃO DE RESTAURAÇÃO — uso único, manual, via console do navegador (F12).
+// Sobrescreve estoqueInicial/minimo/codigo dos itens originais com os valores do arquivo base.
+// Mantém intacto: histórico de Movimentações (D.movs), itens novos criados depois do arquivo base, e Patrimônio.
+function restaurarEstoqueOriginal(){
+  var aviso='ATENÇÃO — AÇÃO IRREVERSÍVEL\n\n'+
+    'Isso vai sobrescrever o Estoque Inicial, Mínimo e Código de TODOS os itens que já existiam no arquivo original,\n'+
+    'voltando eles pros valores originais do arquivo base.\n\n'+
+    'O que NÃO é afetado:\n'+
+    '- Histórico de Movimentações (entradas/saídas continuam registradas)\n'+
+    '- Itens novos criados depois do arquivo original\n'+
+    '- Patrimônio\n\n'+
+    'Se alguém corrigiu manualmente algum estoque depois do arquivo original, essa correção será perdida.\n\n'+
+    'Confirma a restauração?';
+  if(!confirm(aviso))return;
+  var restaurados=0;
+  DADOS_INICIAIS.itens.forEach(function(o){
+    var item=D.itens.find(function(i){return i.id===o.id;});
+    if(item){
+      item.estoqueInicial=o.estoqueInicial;
+      item.minimo=o.minimo;
+      if(o.codigo)item.codigo=o.codigo;
+      restaurados++;
+    }
+  });
+  salvar();
+  renderAll();
+  alert('Restauração concluída: '+restaurados+' itens voltaram ao estoque original. Dados salvos.');
 }
 function excluirMov(id){
 if(!confirm('Excluir esta movimentação?'))return;
