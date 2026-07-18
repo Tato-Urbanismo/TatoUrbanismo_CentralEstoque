@@ -563,6 +563,14 @@ var s=item.estoqueInicial||0;
 D.movs.filter(function(m){return m.itemId===id;}).forEach(function(m){s+=m.tipo==='entrada'?m.qty:-m.qty;});
 return Math.max(0,s);
 }
+function chegadaTotal(id){
+var item=D.itens.find(function(i){return i.id===id;});
+if(!item)return 0;
+var base=item.chegada!==undefined?item.chegada:(item.estoqueInicial||0);
+var somaEntradas=0;
+D.movs.filter(function(m){return m.itemId===id&&m.tipo==='entrada';}).forEach(function(m){somaEntradas+=m.qty;});
+return Math.max(0,base+somaEntradas);
+}
 function statusEstoque(a,m){
 if(a<=0)return '<span class="st-zero">⛔ Zerado</span>';
 if(a<m)return '<span class="st-low">⚠ Baixo</span>';
@@ -774,8 +782,8 @@ fEst.style.background='';
 fEst.style.color='';
 var lEst=document.getElementById('f-est-label');
 if(lEst)lEst.textContent='Estoque Atual (editável)';
-document.getElementById('f-chegada').value=(item.chegada!==undefined?item.chegada:(item.estoqueInicial||0));
-document.getElementById('f-chegada-orig').value=(item.chegada!==undefined?item.chegada:(item.estoqueInicial||0));
+document.getElementById('f-chegada').value=chegadaTotal(item.id);
+document.getElementById('f-chegada-orig').value=chegadaTotal(item.id);
 document.getElementById('f-estatual-orig').value=_atualEdit;
 document.getElementById('modal-cad-title').textContent='Editar — '+item.desc.substring(0,35);
 document.getElementById('modal-cad').style.display='flex';
@@ -788,12 +796,15 @@ var editId=document.getElementById('f-edit-id').value;
 // Calcular estoqueInicial para que estoqueAtual fique igual ao valor digitado
 // estoqueAtual = estoqueInicial + movs => estoqueInicial = valorDigitado - movs
 var _chegadaVal=parseInt(document.getElementById('f-chegada').value)||0;
+var _chegadaOrig=parseInt(document.getElementById('f-chegada-orig').value)||0;
 var _estAtualVal=parseInt(document.getElementById('f-est').value)||0;
 var _estAtualOrig=parseInt(document.getElementById('f-estatual-orig').value)||0;
 var _estoqIni=_estAtualVal;
+var _chegadaBase=_chegadaVal;
 if(editId){
   var _itemAtual=D.itens.find(function(i){return i.id===editId;});
   _estoqIni=_itemAtual?(_itemAtual.estoqueInicial||0):0;
+  _chegadaBase=_itemAtual?(_itemAtual.chegada!==undefined?_itemAtual.chegada:(_itemAtual.estoqueInicial||0)):0;
   if(_estAtualVal!==_estAtualOrig){
     // usuario editou "Estoque Atual": recalcula o estoque inicial pra bater com o valor desejado
     var _somaMovs=0;
@@ -801,6 +812,13 @@ if(editId){
     _estoqIni=_estAtualVal-_somaMovs;
   }
   if(_estoqIni<0)_estoqIni=0;
+  if(_chegadaVal!==_chegadaOrig){
+    // usuario editou "Qtd Chegada" (total): recalcula a base descontando as Entradas ja registradas
+    var _somaEntradas=0;
+    D.movs.filter(function(m){return m.itemId===editId&&m.tipo==='entrada';}).forEach(function(m){_somaEntradas+=m.qty;});
+    _chegadaBase=_chegadaVal-_somaEntradas;
+  }
+  if(_chegadaBase<0)_chegadaBase=0;
 }
 var obj={
 id:editId||gerarId(),
@@ -810,7 +828,7 @@ desc:desc,
 cat:document.getElementById('f-cat').value,
 un:document.getElementById('f-un').value,
 estoqueInicial:_estoqIni,
-chegada:_chegadaVal,
+chegada:_chegadaBase,
 minimo:parseInt(document.getElementById('f-min').value)||0
 };
 var aba=document.getElementById('f-aba').value;
@@ -994,7 +1012,7 @@ h2+='<td class="col-cod">'+(i.codigo||'—')+'</td>';
 h2+='<td><strong>'+i.desc+'</strong></td>';
 h2+='<td style="font-family:JetBrains Mono,monospace;font-size:11px">'+i.un+'</td>';
 h2+='<td class="num"><input type="number" min="0" value="'+(i.minimo||0)+'" onchange="atualizarMinimo(\"'+sid+'\",this.value)" style="width:55px;text-align:right;font-family:JetBrains Mono,monospace;font-size:11px;border:1px solid var(--border);border-radius:3px;padding:2px 5px;background:#fff;color:var(--gold);font-weight:600"></td>';
-h2+='<td class="num">'+(i.chegada!==undefined?i.chegada:(i.estoqueInicial||0))+'</td>';
+h2+='<td class="num">'+chegadaTotal(i.id)+'</td>';
 h2+='<td class="num" style="font-weight:700">'+a+'</td>';
 h2+='<td>'+statusEstoque(a,i.minimo)+'</td>';
 h2+='<td style="white-space:nowrap"><button class="fbtn" data-id="'+i.id+'" onclick="editarItem(this.dataset.id)">Editar</button> <button class="fbtn" data-id="'+i.id+'" data-nome="'+i.desc+'" onclick="abrirDel(this.dataset.id,this.dataset.nome)" style="color:var(--red);border-color:var(--red)">Excluir</button></td>';
@@ -1025,7 +1043,7 @@ h2+='<td class="col-cod">'+(i.codigo||'—')+'</td>';
 h2+='<td><strong>'+i.desc+'</strong></td>';
 h2+='<td style="font-family:JetBrains Mono,monospace;font-size:11px">'+i.un+'</td>';
 h2+='<td class="num"><input type="number" min="0" value="'+(i.minimo||0)+'" onchange="atualizarMinimo(\"'+sid+'\",this.value)" style="width:55px;text-align:right;font-family:JetBrains Mono,monospace;font-size:11px;border:1px solid var(--border);border-radius:3px;padding:2px 5px;background:#fff;color:var(--gold);font-weight:600"></td>';
-h2+='<td class="num">'+(i.chegada!==undefined?i.chegada:(i.estoqueInicial||0))+'</td>';
+h2+='<td class="num">'+chegadaTotal(i.id)+'</td>';
 h2+='<td class="num" style="font-weight:700">'+a+'</td>';
 h2+='<td>'+statusEstoque(a,i.minimo)+'</td>';
 h2+='<td style="white-space:nowrap"><button class="fbtn" data-id="'+i.id+'" onclick="editarItem(this.dataset.id)">Editar</button> <button class="fbtn" data-id="'+i.id+'" data-nome="'+i.desc+'" onclick="abrirDel(this.dataset.id,this.dataset.nome)" style="color:var(--red);border-color:var(--red)">Excluir</button></td>';
@@ -1105,7 +1123,7 @@ h2+='<td><strong>'+i.desc+'</strong></td>';
 h2+='<td style="font-size:11px;color:var(--muted)">'+i.cat+'</td>';
 h2+='<td style="font-family:JetBrains Mono,monospace;font-size:11px">'+i.un+'</td>';
 h2+='<td class="num"><input type="number" min="0" value="'+(i.minimo||0)+'" onchange="atualizarMinimo(\"'+sid+'\",this.value)" style="width:55px;text-align:right;font-family:JetBrains Mono,monospace;font-size:11px;border:1px solid var(--border);border-radius:3px;padding:2px 5px;background:#fff;color:var(--gold);font-weight:600"></td>';
-h2+='<td class="num">'+(i.chegada!==undefined?i.chegada:(i.estoqueInicial||0))+'</td>';
+h2+='<td class="num">'+chegadaTotal(i.id)+'</td>';
 h2+='<td class="num" style="font-weight:700">'+a+'</td>';
 h2+='<td>'+statusEstoque(a,i.minimo)+'</td>';
 h2+='<td style="white-space:nowrap"><button class="fbtn" data-id="'+i.id+'" onclick="editarItemRede(this.dataset.id)">Editar</button> <button class="fbtn" data-id="'+i.id+'" data-nome="'+i.desc+'" onclick="abrirDel(this.dataset.id,this.dataset.nome)" style="color:var(--red);border-color:var(--red)">Excluir</button></td>';
