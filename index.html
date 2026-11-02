@@ -224,20 +224,7 @@ function fecharPrintModal(){
   document.getElementById('print-overlay').style.display='none';
   document.body.style.overflow='';
 }
-function imprimirModalPrint(){
-  var conteudo=document.getElementById('print-content').innerHTML;
-  var el=document.getElementById('print-iframe');
-  if(el)el.parentNode.removeChild(el);
-  var iframe=document.createElement('iframe');
-  iframe.id='print-iframe';
-  iframe.style.cssText='position:fixed;top:-9999px;left:-9999px;width:210mm;height:297mm;border:none;opacity:0';
-  document.body.appendChild(iframe);
-  var doc=iframe.contentDocument||iframe.contentWindow.document;
-  doc.open();
-  doc.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;margin:15mm;font-size:10pt}h2{font-size:13pt;margin:0 0 4px}p{font-size:9pt;color:#555;margin:0 0 12px}table{width:100%;border-collapse:collapse}th{background:#0d1117;color:#fff;padding:6px 8px;text-align:left;font-size:9pt}td{padding:5px 8px;border-bottom:1px solid #ddd;font-size:9pt}</style></head><body>'+conteudo+'</body></html>');
-  doc.close();
-  setTimeout(function(){iframe.contentWindow.focus();iframe.contentWindow.print();},400);
-}
+function imprimirModalPrint(){window.print();}
 function baixarCSV(itens,nome){var b=new Blob(['\uFEFF'+gerarCSV(itens)],{type:'text/csv;charset=utf-8'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=nome+'_'+new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')+'.csv';a.click();URL.revokeObjectURL(u);}
 function imprimirCat(cat,nome){abrirPDF(nome,D.itens.filter(function(i){return !i.rede&&i.cat===cat;}));}
 function exportarCat(cat,nome){baixarCSV(D.itens.filter(function(i){return !i.rede&&i.cat===cat;}),nome);}
@@ -894,10 +881,17 @@ carregar();renderAll();atualizarRelogio();setInterval(atualizarRelogio,30000);
 </div>
 <style>
 @media print {
-  body > *:not(#print-overlay) { display:none !important; }
-  #print-overlay { display:block !important; position:static !important; background:white !important; overflow:visible !important; }
-  #print-overlay > div { box-shadow:none !important; }
-  #print-overlay > div > div:first-child { display:none !important; }
+  body * { visibility:hidden; }
+  #print-content, #print-content * { visibility:visible; }
+  #print-content {
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    font-family:Arial,sans-serif;
+    font-size:10pt;
+    padding:10mm;
+    background:white;
+  }
 }
 </style>
 </body>
