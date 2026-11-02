@@ -213,9 +213,9 @@ function gerarHTML(titulo,itens){var data=new Date().toLocaleDateString('pt-BR')
 function gerarCSV(itens){var h='N\u00ba;Descri\u00e7\u00e3o;Categoria;Unidade;Estoque;M\u00ednimo;Status\r\n';itens.forEach(function(i){var a=estoqueAtual(i.id);var cat=i.rede?('Rede '+i.rede.charAt(0).toUpperCase()+i.rede.slice(1)):i.cat;var st=a<=0?'ZERADO':(a<(i.minimo||0)?'BAIXO':'OK');h+=(i.codigo||'-')+';'+i.desc.replace(/;/g,',')+';'+cat+';'+i.un+';'+a+';'+(i.minimo||0)+';'+st+'\r\n';});return h;}
 function abrirPDF(titulo,itens){
   var data=new Date().toLocaleDateString('pt-BR');
-  var rows=itens.map(function(i){var a=estoqueAtual(i.id);var cat=i.rede?('Rede '+i.rede.charAt(0).toUpperCase()+i.rede.slice(1)):i.cat;var st=a<=0?'ZERADO':(a<(i.minimo||0)?'BAIXO':'OK');var cor=a<=0?'#c0392b':(a<(i.minimo||0)?'#b8860a':'#2d7a40');return '<tr><td>'+(i.codigo||'-')+'</td><td>'+i.desc+'</td><td>'+cat+'</td><td>'+i.un+'</td><td style="text-align:right">'+a+'</td><td style="text-align:right">'+(i.minimo||0)+'</td><td style="color:'+cor+';font-weight:700">'+st+'</td></tr>';}).join('');
-  var conteudo='<h2 style="font-family:Arial;font-size:16px;margin-bottom:4px">'+titulo+' — Tato Urbanismo</h2><p style="font-family:Arial;font-size:12px;color:#666;margin-bottom:16px">Data: '+data+' | Total: '+itens.length+' itens</p><table style="width:100%;border-collapse:collapse;font-family:Arial;font-size:12px"><thead><tr style="background:#0d1117;color:#fff"><th style="padding:8px;text-align:left">Nº</th><th style="padding:8px;text-align:left">Descrição</th><th style="padding:8px;text-align:left">Categoria</th><th style="padding:8px;text-align:left">Un</th><th style="padding:8px;text-align:right">Estoque</th><th style="padding:8px;text-align:right">Mínimo</th><th style="padding:8px;text-align:left">Status</th></tr></thead><tbody>'+rows+'</tbody></table>';
-  document.getElementById('print-title').textContent=titulo+' — Tato Urbanismo';
+  var rows=itens.map(function(i){var a=estoqueAtual(i.id);var cat=i.rede?('Rede '+i.rede.charAt(0).toUpperCase()+i.rede.slice(1)):i.cat;var st=a<=0?'ZERADO':(a<(i.minimo||0)?'BAIXO':'OK');var cor=a<=0?'#c0392b':(a<(i.minimo||0)?'#b8860a':'#2d7a40');return '<tr><td style="padding:6px 8px;border-bottom:1px solid #eee">'+(i.codigo||'-')+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee">'+i.desc+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee">'+cat+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee">'+i.un+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right">'+a+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right">'+(i.minimo||0)+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;color:'+cor+';font-weight:700">'+st+'</td></tr>';}).join('');
+  var conteudo='<div style="font-family:Arial,sans-serif"><h2 style="font-size:15px;margin:0 0 4px">'+titulo+' — Tato Urbanismo</h2><p style="font-size:11px;color:#666;margin:0 0 14px">Data: '+data+' | Total: '+itens.length+' itens</p><table style="width:100%;border-collapse:collapse;font-size:11px"><thead><tr style="background:#0d1117;color:#fff"><th style="padding:7px 8px;text-align:left">Nº</th><th style="padding:7px 8px;text-align:left">Descrição</th><th style="padding:7px 8px;text-align:left">Categoria</th><th style="padding:7px 8px;text-align:left">Un</th><th style="padding:7px 8px;text-align:right">Estoque</th><th style="padding:7px 8px;text-align:right">Mínimo</th><th style="padding:7px 8px;text-align:left">Status</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+  document.getElementById('print-title').textContent=titulo;
   document.getElementById('print-content').innerHTML=conteudo;
   document.getElementById('print-overlay').style.display='block';
   document.body.style.overflow='hidden';
@@ -223,6 +223,12 @@ function abrirPDF(titulo,itens){
 function fecharPrintModal(){
   document.getElementById('print-overlay').style.display='none';
   document.body.style.overflow='';
+}
+function imprimirModalPrint(){
+  var conteudo=document.getElementById('print-content').innerHTML;
+  var janela=window.open('','_blank','width=800,height=600');
+  janela.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Relatório</title><style>body{font-family:Arial,sans-serif;margin:20px;font-size:11pt}table{width:100%;border-collapse:collapse}th{background:#0d1117;color:#fff;padding:6px 8px;text-align:left}td{padding:5px 8px;border-bottom:1px solid #ddd}@media print{body{margin:10px}}</style></head><body>'+conteudo+'<script>window.onload=function(){window.print();window.onafterprint=function(){window.close();};<\/script></body></html>');
+  janela.document.close();
 }
 function baixarCSV(itens,nome){var b=new Blob(['\uFEFF'+gerarCSV(itens)],{type:'text/csv;charset=utf-8'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=nome+'_'+new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')+'.csv';a.click();URL.revokeObjectURL(u);}
 function imprimirCat(cat,nome){abrirPDF(nome,D.itens.filter(function(i){return !i.rede&&i.cat===cat;}));}
@@ -871,7 +877,7 @@ carregar();renderAll();atualizarRelogio();setInterval(atualizarRelogio,30000);
     <div style="background:#0d1117;color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;flex-wrap:wrap;gap:8px">
       <span id="print-title" style="font-weight:700;font-size:14px;flex:1;min-width:0"></span>
       <div style="display:flex;gap:8px;flex-shrink:0">
-        <button onclick="window.print()" style="background:#2563eb;color:#fff;border:none;padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">🖨 Imprimir</button>
+        <button onclick="imprimirModalPrint()" style="background:#2563eb;color:#fff;border:none;padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">🖨 Imprimir / PDF</button>
         <button onclick="fecharPrintModal()" style="background:#374151;color:#fff;border:none;padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">✕ Fechar</button>
       </div>
     </div>
