@@ -568,7 +568,7 @@ setKpi('kpi-'+aba,[
 ]);
 var cnt=document.getElementById('c-'+aba);if(cnt)cnt.textContent=rows.length+' itens';
 var tbody=document.getElementById('td-'+aba);if(!tbody)return;
-var comCat=(aba==='uniformes'||aba==='equipamentos');
+var comCat=(aba==='uniformes'||aba==='equipamentos'||aba==='argamassas');
 if(!rows.length){tbody.innerHTML='<tr><td colspan="8" class="empty-state">Nenhum item encontrado.</td></tr>';return;}
 var html2='';
 for(var k=0;k<rows.length;k++){
