@@ -226,9 +226,17 @@ function fecharPrintModal(){
 }
 function imprimirModalPrint(){
   var conteudo=document.getElementById('print-content').innerHTML;
-  var janela=window.open('','_blank','width=800,height=600');
-  janela.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Relatório</title><style>body{font-family:Arial,sans-serif;margin:20px;font-size:11pt}table{width:100%;border-collapse:collapse}th{background:#0d1117;color:#fff;padding:6px 8px;text-align:left}td{padding:5px 8px;border-bottom:1px solid #ddd}@media print{body{margin:10px}}</style></head><body>'+conteudo+'<script>window.onload=function(){window.print();window.onafterprint=function(){window.close();};<\/script></body></html>');
-  janela.document.close();
+  var el=document.getElementById('print-iframe');
+  if(el)el.parentNode.removeChild(el);
+  var iframe=document.createElement('iframe');
+  iframe.id='print-iframe';
+  iframe.style.cssText='position:fixed;top:-9999px;left:-9999px;width:210mm;height:297mm;border:none;opacity:0';
+  document.body.appendChild(iframe);
+  var doc=iframe.contentDocument||iframe.contentWindow.document;
+  doc.open();
+  doc.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;margin:15mm;font-size:10pt}h2{font-size:13pt;margin:0 0 4px}p{font-size:9pt;color:#555;margin:0 0 12px}table{width:100%;border-collapse:collapse}th{background:#0d1117;color:#fff;padding:6px 8px;text-align:left;font-size:9pt}td{padding:5px 8px;border-bottom:1px solid #ddd;font-size:9pt}</style></head><body>'+conteudo+'</body></html>');
+  doc.close();
+  setTimeout(function(){iframe.contentWindow.focus();iframe.contentWindow.print();},400);
 }
 function baixarCSV(itens,nome){var b=new Blob(['\uFEFF'+gerarCSV(itens)],{type:'text/csv;charset=utf-8'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=nome+'_'+new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')+'.csv';a.click();URL.revokeObjectURL(u);}
 function imprimirCat(cat,nome){abrirPDF(nome,D.itens.filter(function(i){return !i.rede&&i.cat===cat;}));}
