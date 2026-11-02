@@ -1,17 +1,10 @@
-// Sem cache - sempre busca do servidor (dados de estoque precisam estar sempre atualizados)
-self.addEventListener('install', function(e){
+const CACHE = 'estoque-v1';
+self.addEventListener('install', e => {
   self.skipWaiting();
 });
-self.addEventListener('activate', function(e){
-  e.waitUntil(
-    caches.keys().then(function(keys){
-      return Promise.all(keys.map(function(k){ return caches.delete(k); }));
-    })
-  );
-  self.clients.claim();
+self.addEventListener('activate', e => {
+  e.waitUntil(self.clients.claim());
 });
-self.addEventListener('fetch', function(e){
-  e.respondWith(fetch(e.request).catch(function(){
-    return new Response('Sem conexão', {status:503});
-  }));
+self.addEventListener('fetch', e => {
+  e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
 });
